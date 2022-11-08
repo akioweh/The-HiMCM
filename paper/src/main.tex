@@ -1,0 +1,143 @@
+\documentclass{mcmthesis}
+\mcmsetup{CTeX = false,
+    tcn = {12833},  %% your team control number
+    problem = {B}, %% your chosen problem (A or B)
+    sheet = true,
+    titleinsheet = True,
+    keywordsinsheet = true,
+    titlepage = false,
+    abstract = false}
+\include{settings}
+
+\usepackage{placeins}
+\usepackage[figuresright]{rotating}
+\usepackage[final]{pdfpages}
+%\usepackage[
+%    backend=bibtex,
+%    style=numeric-verb,
+%]{biblatex}
+\usepackage{babel}
+
+%\addbibresource{citations.bib}
+
+
+\title{CO\textsubscript{2} and Global Warming}
+
+\begin{document}
+
+    \begin{abstract}
+        Abstract
+
+        \begin{keywords}
+            Keywords, More Keywords
+        \end{keywords}
+
+    \end{abstract}
+
+    \maketitle
+    \tableofcontents
+    \newpage
+
+
+    \section{Introduction}
+
+    \subsection{Background}
+    Background
+
+    \subsection{Problem Analysis}
+    Expansion on Problem
+
+    \noindent\textbf{Problem one}: Specifics
+
+    \noindent\textbf{Problem two}: Specifics
+
+    \subsection{Keyword Definitions}
+    \noindent\textbf{Term 1}: Definition
+
+    \noindent\textbf{Term 2}: Definition
+
+    \noindent\textbf{Term 3}: Definition
+
+    \subsection{Assumptions and Justifications}
+    \noindent\textbf{Assumption 1}: Statement
+    \textbf{Justification}: blah blah
+
+    \noindent\textbf{Assumption 2}: Statement
+    \textbf{Justification}: blah blah
+
+    \noindent\textbf{Assumption 3}: Statement
+    \textbf{Justification}: blah blah
+
+
+    \section{Modeling}
+    Introduction of model, similar to abstract
+
+    \subsection{Variables and Parameters}
+    See table 2.1:
+    \begin{table}[h!]
+        \centering
+        \begin{tabular}{cc}
+            \toprule
+            Variable & Definition      \\
+            \midrule
+            $x$      & description     \\
+            $y$      & description     \\
+            $z$      & description     \\
+            \bottomrule
+        \end{tabular}
+        \caption{Variables in the Model}
+        \label{tab:my_label}
+    \end{table}
+
+    \subsection{Model 1}
+    blah blah
+
+    \subsection{Model 2}
+    blah blah
+
+
+    \section{Results}
+    \noindent (Full data in References.)
+
+    blah blah
+
+
+    \section{Model Analysis}
+
+    \subsection{Parameter Sensitivity}
+    blah blah
+
+    \subsection{General Evaluation}
+
+    \noindent\textbf{Strength 1}: asdf
+
+    \noindent\textbf{Strength 2}: asdf
+
+    \noindent\textbf{Weakness 1}: asdf
+
+    \subsection{Possible Improvements}
+    blah blah
+
+
+    \newpage
+
+
+    \section{References}
+
+    \subsection{Program Code}
+    \noindent Result data generated:
+    \begin{verbatim}
+    text data stuff
+
+    \end{verbatim}
+
+    \noindent Python program code:
+    \begin{lstlisting}[language=Python]
+        # pass
+
+    \end{lstlisting}
+
+    \subsection{Bibliography}
+%    \printbibliography
+
+\end{document}
