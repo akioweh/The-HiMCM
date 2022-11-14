@@ -9,7 +9,6 @@
     abstract = false}
 \include{settings}
 \usepackage{placeins}
-\usepackage{graphicx}
 \usepackage[figuresright]{rotating}
 \usepackage[final]{pdfpages}
 %\usepackage[
@@ -17,27 +16,30 @@
 %    style=numeric-verb,
 %]{biblatex}
 \usepackage{babel}
+\usepackage{textcomp}
+\usepackage{changepage}
+\usepackage{siunitx}
 
 %\addbibresource{citations.bib}
 
 
-\title{CO\textsubscript{2} and Global Warming}
+\title{Quantitatively Modelling CO\textsubscript{2} and Global Warming}
 
 %! suppress = LineBreak
 \begin{document}
-\graphicspath{ {./images/} }
+    \graphicspath{ {./figs/} }
     \begin{abstract}
         Abstract
 
         \begin{keywords}
-            Keywords, More Keywords
+            Global Warming, Greenhouse Gases, CO\textsubscript{2}, Forecast, Predictions, Environment, Temperature
         \end{keywords}
 
     \end{abstract}
 
     \maketitle
     \tableofcontents
-    \newpage 
+    \newpage
 
 
     \section{Introduction}
@@ -46,92 +48,192 @@
     The most significant greenhouse gas on Earth is carbon dioxide, which both absorbs and radiates heat. In contrast to oxygen and nitrogen, which together make up the majority of our atmosphere, greenhouse gases absorb heat emitted from the Earth's surface and re-emit it in all directions, including back toward the planet's surface. The natural greenhouse effect that keeps the Earth's atmosphere above freezing would be insufficient without carbon dioxide. People are accelerating the natural greenhouse effect and raising the earth's temperature by releasing more carbon dioxide into the atmosphere. The NOAA Global Monitoring Lab found that in 2021, carbon dioxide accounted for nearly two thirds of the total heating influence of all greenhouse gases created by humans.
 
     Prior to the Industrial Revolution, carbon dioxide in the atmosphere was consistently around 280 parts per million (ppm).
-    The concentration of CO\textsubscript{2} in the atmosphere reached 377.7 ppm
-    in March 2004, resulting in the largest 10-year average
-    increase up to that time. According to scientists from National
-    Oceanographic and Atmospheric Administration (NOAA) and
-    Scripps Institution of Oceanography (SIO) the monthly mean
-    CO\textsubscript{2} concentration level peaked at 421 ppm in May 2022. An
-    Organisation for Economic Co-Operations and Development
-    (OECD) report predicts a CO\textsubscript{2} level of 685 ppm by 2050.
+    The concentration of CO\textsubscript{2} in the atmosphere reached 377.7 ppm in March 2004, resulting in the largest 10-year average increase up to that time.
+    According to scientists from National Oceanographic and Atmospheric Administration (NOAA) and Scripps Institution of Oceanography (SIO) the monthly mean CO\textsubscript{2} concentration level peaked at 421 ppm in May 2022.
+    An Organisation for Economic Co-Operations and Development (OECD) report predicts a CO\textsubscript{2} level of 685 ppm by 2050.
 
 
     \subsection{Problem Analysis}
-    Our thought process and plan is presented here below as a flowchart:
+    \noindent\textbf{Problem 1: CO\textsubscript{2} level Forecasting}
+
+    \begin{adjustwidth}{1cm}{}
+
+        \noindent Modelling. \\
+        \vspace{-6pt}
+        \noindent Prodice models that reflect existing CO\textsubscript{2} data and extrapolates to reasonable predictions.
+
+        \begin{adjustwidth}{1cm}{}
+            \noindent Choose suitable mathematical models and fit each one to existing data.
+
+            \noindent Evaluate each model\ldots~
+            Use different evaluation approaches including statistical accuracy, contextual reasoning, comparison with external predictions, etc.
+
+            \noindent Generate a conclusive model based on results obtained\ldots~
+            Either pick the ``best'' model, or create new model based on multiple sub-parts.
+        \end{adjustwidth}
+
+        \noindent Verify External Claims.
+
+        \begin{adjustwidth}{1cm}{}
+            \noindent Whether CO\textsubscript{2} levels in 2004 had a ``larger increase than observed over any previous 10-year period''.
+
+            \begin{adjustwidth}{1cm}{}
+                \noindent Determine how exactly the comparison is done with ``any previous 10-year period''\ldots~
+                Find supporting evidence from existing literature or make the best interpretation.
+            \end{adjustwidth}
+
+            \noindent Whether CO\textsubscript{2} levels will reach 685ppm by 2050.
+
+            \begin{adjustwidth}{1cm}{}
+                \noindent Testify this statement against all models.
+            \end{adjustwidth}
+
+        \end{adjustwidth}
+
+        \noindent Draw Conclusions.
+
+        \vspace{-6pt}
+        Real-world implications based on predictions and results.
+
+    \end{adjustwidth}
+
+
+    \noindent\textbf{Problem 2: Temperature vs CO\textsubscript{2}}
+
+    \begin{adjustwidth}{1cm}{}
+
+        \noindent Modelling.
+
+        \vspace{-6pt}
+        \noindent Prodice models that reflect existing temperature data and extrapolates to reasonable predictions.
+
+        \begin{adjustwidth}{1cm}{}
+            \noindent Direct relationship between CO\textsubscript{2} and temperature.
+
+            \noindent Temperature as a time series, and compare with CO\textsubscript{2} models from Problem 1.
+        \end{adjustwidth}
+
+        \noindent Predictions.
+
+        \vspace{-6pt}
+        \noindent Predict points in time where global temperature will have an average increase of 1.25\textdegree C, 1.5\textdegree C, and 2\textdegree C compared to the base period of 1951-1980.
+
+        \noindent Evaluation.
+
+        \vspace{-6pt}
+        \noindent Longevity \& Confidence; discuss the distance into the future that the model can still predict with reasonable accuracy.
+
+
+    \end{adjustwidth}
+
+    \bigskip
+
+    \noindent Our thought process and plan is presented here below as a flowchart:
     \begin{center}
-        \frame{\includegraphics[scale=0.5]{plan}}
+        \makebox[\textwidth]{\includegraphics[width=\textwidth]{plan}}
     \end{center}
 
-    \noindent\textbf{Problem one}: Specifics
-
-    \noindent\textbf{Problem two}: Specifics
 
     \subsection{Keyword Definitions}
-    \noindent\textbf{Term 1}: Definition
+    \noindent\textbf{CO\textsubscript{2} Level/Content}: Global average concentration of CO\textsubscript{2} in the atmosphere, in parts-per-million (ppm).
 
-    \noindent\textbf{Term 2}: Definition
+    \noindent\textbf{Relative Temperature}: Global average temperature, relative to the baseline average temperature from 1951 to 1980, in degrees Celsius.
 
-    \noindent\textbf{Term 3}: Definition
 
     \subsection{Assumptions and Justifications}
-    \noindent\textbf{Assumption 1}: Statement
-    \textbf{Justification}: blah blah
+    \noindent\textbf{Assumption 1}: CO\textsubscript{2}, as a greenhouse gas, has a true case-and-effect relationship with temperature.
+    \textbf{Justification}: Most existing literature and evidence suggest that CO\textsubscript{2} is a greenhouse gas, and that greenhouse gases traps heat and leads to increases in temperature on a global scale. This fact is taken for granted to make more confident predictions that relate temperature to CO\textsubscript{2} levels.
 
-    \noindent\textbf{Assumption 2}: Statement
-    \textbf{Justification}: blah blah
+    \noindent\textbf{Assumption 2}: Both datasets provided for CO\textsubscript{2} emissions and temperatures are reliable and accurate.
+    \textbf{Justification}: Accurate predictions are always based on accurate data. Since official data is given along the problem, they will be taken and treated assuming the absence of mistakes and errors.
 
     \noindent\textbf{Assumption 3}: Statement
     \textbf{Justification}: blah blah
 
 
-    \section{Modeling}
-    This is a general overview of the most appropriate mathematical models we can use to describe and predict data in relation to the problem. 
-
-
-
-    \subsection{Variables and Parameters}
-    See table 2.1:
+    \subsection{General Variables}
+    See table~\ref{tab:my_label}:
     \begin{table}[h!]
         \centering
         \begin{tabular}{cc}
             \toprule
             Variable & Definition      \\
             \midrule
-            $x$      & description     \\
-            $y$      & description     \\
-            $z$      & description     \\
+            $C_i$      & CO\textsubscript{2} level at year $i$     \\
+            $T_i$      & Temperature at year $i$     \\
+            $C^{-1}_i$ & Year where (predicted) CO\textsubscript{2} is at level $i$ \\
+            $T^{-1}_i$ & Year where (predicted) Temperature is at $i$ \\
             \bottomrule
         \end{tabular}
-        \caption{Variables in the Model}
+        \caption{General Variables}
         \label{tab:my_label}
     \end{table}
 
-    \subsection{Linear Regression}
-    Linear regression is an approach used to model the linear relationship between an independent variable (x) and dependent variable (y), by fitting a linear equation. It is used to present the past values and predict others, in this case future CO\textsubscript{2} emissions. One of the most common and simplest methods used to obtain a regression line is the Ordinary Least Square (OLS) method. It involves minimizing the sum of the offsets of residuals of points from a plotted line, to then obtain the regression line. 
 
-    To perform the method, a difference is first set between the dependent variable (CO\textsubscript{2}) and its estimation: ${(y - \hat{y})}$. The difference is then squared, and a summation taken for the entire data set: ${\displaystyle S = \sum (y - \hat{y}^2)}$. To obtain the parameters that make the sum of square difference become minimum, a partial derivative is taken for each parameter, then equated to 0: $${\displaystyle \frac{d S}{d \alpha} = 0}$$. The final formula for OLS that is obtained is denoted as:
-    
-    ${S = \sum{(y - \hat{y})^2} = \sum{(y - ax - b)^2}}$
-    
+
+    \section{CO\textsubscript{2} - Modelling}
+    This section includes a walk through of all mathematical models used to model the CO\textsubscript{2} levels as a time series and how they specifically apply to the given data.
+
+    \subsection{Pre-Analysis}
+    Firstly, this problem takes the form of a single-variable time series; CO\textsubscript{2} levels evolve as time passes, and we are trying to model the relationship between time and CO\textsubscript{2}.
+    Based on simple logic and scientific reasoning, there is no cause-and-effect relationship between time and carbon dioxide levels, so the models will assume a relationship that is purely a statistical correlation.
+
+    The given CO\textsubscript{2} data is graphed to visualize the rough correlation and trend present in the data -~\ref{fig:co2}. It is very apparent that there is a strong correlation with minimal variance between time and carbon dioxide levels. The shape of the curve seems exponential. These ideas will be help guide future mathematical modelling.
+    Auto-correlation is calculated to identify any seasonality within the data -~\ref{fig:co2_acf}. However, it is apparent that there is no clear seasonality within the data, as shown by the lack of an oscillating correlation. This is expected since the data comes in annual resolutions; yearly seasonality could be expected due to seasonal effects, but would only be observed with monthly data.
+
+    \begin{figure}[h]
+        \centering
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{co2}
+            \caption{Graph of given CO\textsubscript{2} data}
+            \label{fig:co2}
+        \end{minipage}%
+        \begin{minipage}{.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{co2_acf}
+            \caption{CO\textsubscript{2} Auto-correlation}
+            \label{fig:co2_acf}
+        \end{minipage}
+    \end{figure}
+
+
+
+    \subsection{Linear Regression}
+    As the simples model, a linear regression is performed first.
+
+    Linear regression is an approach used to model the linear relationship between an independent variable (x) and dependent variable (y), by fitting a linear equation. It is used to present the past values and predict others, in this case future CO\textsubscript{2} emissions. One of the most common and simplest methods used to obtain a regression line is the Ordinary Least Square (OLS) method. In short, OLS minimizes the Square-Error for each point against a given linear function by adjusting the function\textquotesingle s parameters, which in the end produces an equation for the linear line of best fit.
+
+    To perform the method, a difference is first set between the dependent variable (CO\textsubscript{2}) and its estimation: ${(y - \hat{y})}$. The difference is then squared, and a summation taken for the entire data set: ${\displaystyle S = \sum (y - \hat{y}^2)}$. To obtain the parameters that make the sum of square difference become minimum, a partial derivative is taken for each parameter, then equated to 0: $\displaystyle \frac{d S}{d \alpha} = 0$. The final formula for OLS that is obtained is denoted as:
+
+    \begin{equation}
+        S = \sum{(y - \hat{y})^2} = \sum{(y - ax - b)^2}
+        \label{eq:ols}
+    \end{equation}
+
+
     The formula was applied to the given data set to obtain the following line equation:
-    
-    ${y = 1.6140361 x - 2854.59326421}$
-    
+
+    \begin{equation}
+        y = 1.6140361 x - 2854.59326421
+        \label{eq:co2_lr}
+    \end{equation}
+
     {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2193. The regression line was then graphed and used to predict the next 30 years of CO\textsubscript{2} emissions, the actual data was also plotted for comparison:
 
     \begin{center}
         \frame{\includegraphics[scale=0.75]{linear}}
     \end{center}
-    
+
     Linear regression is useful in relation to the problem as it is simple to interpret and portray, allowing the prediction of data to be accurate during interpolation. However, if the data to be predicted is outside of the range, such as predicting future CO\textsubscript{2} levels, extrapolation may be inaccurate due to a false assumption of the trend. Furthermore, if the variables plotted provide a non-linear relationship, a linear regression line may inaccurately represent and predict values, which is the case in the data provided.
 
 
     \subsection{Exponential Regression}
-    The second approach decided upon was exponential regression, which models the non-linear relationship between an independent variable (x) and dependent variable (y). This choice was made based on visual indicators of the data given’s trend, exhibiting a possible exponential curve. The regression curve portrays data rapidly increasing; at an exponential rate. In exponential regression, the correlation can be denoted as:
+    The second approach decided upon was exponential regression, which models the non-linear relationship between an independent variable (x) and dependent variable (y). This choice was made based on visual indicators of the data given\textquotesingle s trend, exhibiting a possible exponential curve. The regression curve portrays data rapidly increasing; at an exponential rate. In exponential regression, the correlation can be denoted as:
 
-    ${log(y) = log (A) + B t}$
-    
-    An exponential function contains a base and an exponent where: ${y = a b ^x}$. This function was then applied to the given data set to form the equation: ${y = 1.005717^(2.8427x - 4854.4) + 256.024}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2079. The equation was graphed alongside the actual values and linear regression line for comparison: 
+    ${\log(y) = \log (A) + B t}$
+
+    An exponential function contains a base and an exponent where: ${y = a b ^x}$. This function was then applied to the given data set to form the equation: ${y = 1.005717^(2.8427x - 4854.4) + 256.024}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2079. The equation was graphed alongside the actual values and linear regression line for comparison:
 
     \begin{center}
         \frame{\includegraphics[scale=0.6]{exponential}}
@@ -139,20 +241,21 @@
 
     Visually, the exponential function better aligns with the actual values; the predicted values also seem to fit with the general trend. An advantage of exponential regression as a predictive model is that it provides high quality forecasts, which increase the accuracy of predicted values during interpolation. However, a key drawback is that a large data set is necessary to carry this method out, as a reasonable amount of continuity is needed to accurately predict future values, especially during extrapolation.
 
+
     \subsection{Logistic Regression}
     The third predictive model selected shares similarities with the exponential model. One key difference however is that an exponential curve is J-shaped, whereas a logistic curve is sigmoid, the growth rate of the y-variable (CO\textsubscript{2}) increases during its lag phase, and eventually reaches a stationary phase. The logistic function has the equation:
 
     ${\displaystyle f(x)={\frac {L}{1+e^{-k(x-x_{0})}}}}$
-    
+
     Where:
     \begin{itemize}
-        \item {L} = Curve’s maximum value
+        \item {L} = Curve\textquotesingle s maximum value
         \item {k} = Logistic growth rate
         \item ${x_0}$ = X value of the sigmoid point
         \item {x} = Real number
     \end{itemize}
-    
-    The function’s parameters were then manually adjusted to best suit the current data set, giving the following equation: ${y = 2523.6 / (1 + e^{(-0.017587 * (x - 2175.5))}) + 260.0180641636529}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm, it was found that it would reach this level at the year 2193. The equation was then graphed alongside with the regression lines of the two previous models to obtain the following graph:
+
+    The function\textquotesingle s parameters were then manually adjusted to best suit the current data set, giving the following equation: ${y = 2523.6 / (1 + e^{(-0.017587 * (x - 2175.5))}) + 260.0180641636529}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm, it was found that it would reach this level at the year 2193. The equation was then graphed alongside with the regression lines of the two previous models to obtain the following graph:
 
     \begin{center}
         \frame{\includegraphics[scale=0.6]{logistic_2040}}
@@ -164,12 +267,13 @@
         \frame{\includegraphics[scale=0.6]{logistic_2400}}
     \end{center}
 
+
     \subsection{Prophet}
-    Prophet is a non-linear regression model released by Facebook, it is a procedure for forecasting time series data, working best with series that have strong seasonal effects of historical data. The graph for CO\textsubscript{2} levels over time can be plotted. The regression model is in the form: 
+    Prophet is a non-linear regression model released by Facebook, it is a procedure for forecasting time series data, working best with series that have strong seasonal effects of historical data. The graph for CO\textsubscript{2} levels over time can be plotted. The regression model is in the form:
 
     ${\displaystyle y_t = g_t + s_t + h_t +\epsilon_t}$
-    
-    Where: 
+
+    Where:
     \begin{itemize}
         \item ${g_t}$ = Piecewise-linear trend
         \item ${s_t}$ = Seasonal patterns
@@ -183,24 +287,25 @@
 
     Prophet is fast and generally maintains a high accuracy when predicting values. It can be used in a range of different contexts and it is robust to outliers, shifts in the overall trend and missing data.  A key disadvantage is that a larger set of data is needed to accurately depict a trend-line.
 
-    \subsection{ARIMA Model}
-    An additional time-series prediction model that was investigated was ARIMA, which is based on ARMA (AutoRegressive Moving Average). These models are widely used in datasets that demonstrate non-stationarity, where the series’ statistical properties such as mean, variance and autocorrelation change over time. ARIMA assumes the input data to be stationary, so any non-stationary data has to be made stationary through a reversible process. Usually, the transformation involves finding the general trend with methods such as regression and then using differencing to remove the trend from the dataset. With the trend eliminated, an ARIMA model can then be constructed and its optimal parameters found. 
+
+    \subsection{ARIMA}
+    An additional time-series prediction model that was investigated was ARIMA, which is based on ARMA (AutoRegressive Moving Average). These models are widely used in datasets that demonstrate non-stationarity, where the series\textquotesingle statistical properties such as mean, variance and autocorrelation change over time. ARIMA assumes the input data to be stationary, so any non-stationary data has to be made stationary through a reversible process. Usually, the transformation involves finding the general trend with methods such as regression and then using differencing to remove the trend from the dataset. With the trend eliminated, an ARIMA model can then be constructed and its optimal parameters found.
 
     Another appropriate model to use in regards to  the data set is ARIMA. ARIMA models are generally denoted as ARIMA (p, d, q) where:
     \begin{itemize}
-        \item p = Number of Auto-Regressive (AR) terms 
+        \item p = Number of Auto-Regressive (AR) terms
         \item d = Number of differencing
         \item q = Number of Moving Average (MA) terms
     \end{itemize}
-    
+
     The functions AR(p) and MA(q) are defined below as:
-    
+
     -----------THERES SUPPOSED TO BE A TABLE HERE----------
 
     Before tuning the parameters p and q, the number of differencing required to make the data stationary must be found out. To evaluate whether the current dataset is stationary, an Augmented Dickey-Fuller (ADF) test was performed.
 
     ADF tests expand on the original Dickey-Fuller test by including higher-order autoregressive processes to form the equation given below:
-    
+
     ${\Delta y_{t}=\alpha +\beta t+\gamma y_{t-1}+\delta _{1}\Delta y_{t-1}+\cdots +\delta _{p-1}\Delta y_{t-p+1}+\varepsilon _{t}}$
 
     Where:
@@ -210,14 +315,14 @@
         \item ${\beta}$ = Coefficient on a time trend
         \item {p} = Lag order of autoregressive process
     \end{itemize}
-    
+
     The results of the ADF test applied on the given dataset is presented below:
 
     -------THERES SUPPOSED TO BE ANOTHER TABLE HERE---------
 
     The p-value obtained is greater than the significance level 0.05 and the ADF statistic is higher than any of the critical values, hence it can be concluded that the time series has a unit root and is non-stationary. The high p-value signifies that a high order of differencing will need to be used.
 
-    To further confirm the data’s stationarity, autocorrelation and partial autocorrelation graphs were also used. AFC and PAFC functions are measures of correlation between past and present data, and indicate which past data values are most useful in predicting future ones.  The results of these functions are then used to select the most optimal parameters for p and q. Both functions were applied on the given dataset and the graphed results displayed below:
+    To further confirm the data\textquotesingle s stationarity, autocorrelation and partial autocorrelation graphs were also used. AFC and PAFC functions are measures of correlation between past and present data, and indicate which past data values are most useful in predicting future ones.  The results of these functions are then used to select the most optimal parameters for p and q. Both functions were applied on the given dataset and the graphed results displayed below:
 
     \begin{center}
         \frame{\includegraphics[scale=0.5]{pacf_acf}}
@@ -226,84 +331,88 @@
     For both graphs the x-axis represents lag, whereas the y-axis indicates the correlation strength. ACF graphs represent the correlation between data values that are n intervals apart. PACF graphs are similar in that they represent the same information, however they also account for the values of the intervals in between.
 
     The correlation that can be seen in the AFC graph is negative, indicating that large current values correspond with small values at the specified lag. The absolute correlation values represent the strength of the relationship; to construct an ARIMA model, the expected trend of these values should be random. In this case, the initial relationship between past and present values is strong, but gradually decreases over lags, indicating a clear trend of decreasing correlation strength.
-    
-    If the autocorrelation follows a random non-linear trend, then AR(p) and MA(q) can be applied to the graphed functions to obtain the optimal parameter values for p and q. 
-    However, this is only assuming the data does not have a trend or seasonality component, which does not apply to the given dataset.
-    
-    The autocorrelation trend as well as the high order of differencing required to transform the data to stationary (as seen in the ADF test) both demonstrate that the given dataset is unsuitable for constructing an ARIMA model, and therefore this prediction model has been rejected and will not be used as part of the predicted CO\textsubscript{2} and temperature values.
-    
 
-    \section{Evaluation}
+    If the autocorrelation follows a random non-linear trend, then AR(p) and MA(q) can be applied to the graphed functions to obtain the optimal parameter values for p and q.
+    However, this is only assuming the data does not have a trend or seasonality component, which does not apply to the given dataset.
+
+    The autocorrelation trend as well as the high order of differencing required to transform the data to stationary (as seen in the ADF test) both demonstrate that the given dataset is unsuitable for constructing an ARIMA model, and therefore this prediction model has been rejected and will not be used as part of the predicted CO\textsubscript{2} and temperature values.
+
+
+
+    \section{CO\textsubscript{2} - Model Evaluation}
     To rank the 4 accepted predictive models on their mathematical accuracy, the following error metrics are to be calculated for each model and then compared with each other:
 
     --------------ANOTHER TABLE---------------------------
 
-    \subsection{Separation of Known Values into Testing and Training data}
-    75\% of known data values are allocated to the testing data group, remaining 25\% are allocated to the training group. The predictive model will take in the training group data values as its sole input, and will predict the remaining 25\%. The model’s predicted values are then to be compared with the training group’s values and the forecast errors obtained.
+    \subsection{Procedure}
+    \noindent \textbf{Separation of Known Values into Testing and Training data}
+
+    75\% of known data values are allocated to the testing data group, remaining 25\% are allocated to the training group. The predictive model will take in the training group data values as its sole input, and will predict the remaining 25\%. The model\textquotesingle s predicted values are then to be compared with the training group\textquotesingle s values and the forecast errors obtained.
     A forecast error is defined as the difference between an observed and its forecasted value; the formula for a single forecast error can be modified to suit multiple data values, and it is denoted by the following equation:
-    
+q1
     ${e_{T+h} = y_{T+h} - \hat{y}_{T+h|T}}$
-    
+
     Where:
     \begin{itemize}
-        \item ${e_{T+h}}$ = Forecast error 
+        \item ${e_{T+h}}$ = Forecast error
         \item ${y_{T+h}}$ = Actual value of the h-step observation
         \item ${\hat{y}_{T+h|T}}$ = Actual value of the h-step forecast
     \end{itemize}
-    
-    
+
+
     [ADD GRAPHED RESULTS HERE + CALCULATED FORECAST ERRORS]
-    
+
     It is important to note that although a model may fit the training data well, it does not necessarily mean the model will forecast well, therefore it is important to take the other error metrics into consideration.
 
-    \subsection{MSE}
+
+    \subsection{Accuracy Analysis}
+
+    \subsubsection{MSE}
     Mean Squared Error (MSE) is a measure of the quality of a predictor or of an assessor, its definition differing accordingly. It is the average squared distance between the actual and predicted values, measuring the variance of the residuals. In this case, only the quality of the predictor is to be assessed. It involves taking the average squared distance between the actual and predicted values, measuring the variance of the residuals. The within-sample MSE of a predictor can then be denoted as:
 
     ${\operatorname {MSE} ={\frac {1}{n}}\sum _{i=1}^{n}\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$
-    
+
     Where:
     \begin{itemize}
         \item ${\frac {1}{n}\sum _{i=1}^{n}}$ = Mean
         \item ${\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$ = Squares of the errors
     \end{itemize}
-    
-     MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE. 
 
-    \subsection{RMSE}
+     MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE.
+
+    \subsubsection{RMSE}
     Root Mean Squared Error (RMSE) is the square root of the MSE, measuring the standard deviation of the residuals. The higher the RMSE value, the larger the deviation between actual and predicted values. By proxy, the lower the RMSE value, the lower the deviation, hence the model is more accurate. Building on the last error metric formula, RMSE can be denoted as:
-    
+
     ${\operatorname {RMSE} = \sqrt{MSE}}$
-    
+
     When outliers are exponentially rare, such as this situation, RMSE is generally preferred over MSE as it provides a better evaluation of model performance, as it uses the same units as the Y axis (CO\textsubscript{2} emissions).
 
-    \subsection{MAE}
+    \subsubsection{MAE}
     Mean Absolute Error (MAE) is the sum of the absolute difference between the actual and predicted values. A perfect prediction model would yield a 0 as its MAE value. The further away from 0 the MAE value is, the more errors the model makes and hence the less accurate the model is. The formula to calculate MAE is denoted as:
 
     ${\displaystyle {MAE} ={\frac {\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}{n}}}$
-    
+
     Where:
     \begin{itemize}
         \item ${\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}$ = Sum of absolute error
         \item {n} = Number of errors
     \end{itemize}
 
-    \subsection{PMCC, ${R^2}$ AND COVARIANCE}
+    \subsubsection{PMCC, ${R^2}$ AND COVARIANCE}
     The last 3 error metrics are explained in further detail when exploring the relationship between temperature and CO\textsubscript{2} emissions
 
-    \subsection{Results}
-    The MSE, RMSE, MAE, PMCC, R^2 and covariance were calculated for each accepted model, rounded to 5 s.f, and compiled into a results table below. For each error metric, the model with the value closest to and furthest from a perfect value were highlighted:
+    \subsubsection{Results}
+    The MSE, RMSE, MAE, PMCC, R\textsuperscript{2} and covariance were calculated for each accepted model, rounded to 5 s.f, and compiled into a results table below. For each error metric, the model with the value closest to and furthest from a perfect value were highlighted:
 
     ---------------A TABLE, AGAIN.-------------------
     --------------LO AND BEHOLD, ANOTHER TABLE--------------
 
 
-
-    \section{Model Analysis}
-
-    \subsection{Parameter Sensitivity}
+    \subsection{Sensitivity Analysis}
     blah blah
 
-    \subsection{General Evaluation}
+
+    \subsection{Overall Evaluation}
 
     \noindent\textbf{Strength 1}: asdf
 
@@ -311,11 +420,48 @@
 
     \noindent\textbf{Weakness 1}: asdf
 
+
     \subsection{Possible Improvements}
     blah blah
 
-
     \newpage
+
+
+
+    \section{CO\textsubscript{2} - Results \& Conclusions}
+
+    \subsection{Forecast Results}
+    we\textquotesingle re doomed
+
+
+    \subsection{Comparison with External Claims}
+    they\textquotesingle re all wrong
+
+
+
+    \section{Temperature - Modelling}
+
+    \subsection{Time Series}
+    Temperature over time.
+
+
+    \subsection{Relationship with CO\textsubscript{2}}
+    100\% causation
+
+
+
+    \section{Temperature - Model Evaluation}
+
+    \subsection{Predictive Ability}
+    our model definitely retains its accuracy 1000 years into the future.
+
+
+
+    \section{Temperature - Results \& Conclusions}
+
+    \subsection{Forecast Results}
+    time to get baked.
+
 
 
     \section{References}
@@ -332,6 +478,7 @@
         # pass
 
     \end{lstlisting}
+
 
     \subsection{Bibliography}
 %    \printbibliography
