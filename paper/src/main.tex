@@ -27,10 +27,12 @@
 %\addbibresource{citations.bib}
 
 
-\title{Quantitatively Modelling CO\textsubscript{2} and Global Warming}
 
 %! suppress = LineBreak
 \begin{document}
+    \title{Quantitatively Modelling CO\textsubscript{2} and Global Warming}
+
+
     \graphicspath{ {./figs/} }
     \begin{abstract}
         Abstract
@@ -128,7 +130,7 @@
         \noindent Predictions.
 
         \vspace{-6pt}
-        \noindent Predict points in time where global temperature will have an average increase of 1.25\textdegree C, 1.5\textdegree C, and 2\textdegree C compared to the base period of 1951-1980.
+        \noindent Predict points in time where global temperature will have an average increase of 1.25\textdegree C, 1.5\textdegree C, and 2\textdegree C compared to the base period of 1951--1980.
 
         \noindent Evaluation.
 
@@ -175,13 +177,15 @@
 
     \subsection{Assumptions and Justifications}
     \noindent\textbf{Assumption 1}: CO\textsubscript{2}, as a greenhouse gas, has a true case-and-effect relationship with temperature.
-    \textbf{Justification}: Most existing literature and evidence suggest that CO\textsubscript{2} is a greenhouse gas, and that greenhouse gases traps heat and leads to increases in temperature on a global scale. This fact is taken for granted to make more confident predictions that relate temperature to CO\textsubscript{2} levels.
+
+    \vspace{-6pt}
+    \noindent\textbf{Justification}: Most existing literature and evidence suggest that CO\textsubscript{2} is a greenhouse gas, and that greenhouse gases traps heat and leads to increases in temperature on a global scale. This fact is taken for granted to make more confident predictions that relate temperature to CO\textsubscript{2} levels.
 
     \noindent\textbf{Assumption 2}: Both datasets provided for CO\textsubscript{2} emissions and temperatures are reliable and accurate.
-    \textbf{Justification}: Accurate predictions are always based on accurate data. Since official data is given along the problem, they will be taken and treated assuming the absence of mistakes and errors.
 
-    \noindent\textbf{Assumption 3}: Statement
-    \textbf{Justification}: blah blah
+    \vspace{-6pt}
+    \noindent\textbf{Justification}: Accurate predictions are always based on accurate data. Since official data is given along the problem, they will be taken and treated assuming the absence of mistakes and errors.
+
 
 
     \subsection{General Variables}
@@ -321,19 +325,23 @@
 
 
 
-    \subsection{Linear Regression}
+    \subsection{Linear}
     A linear regression is performed first due to its simplicity and ability to help pick more complex models.
 
-    Linear regression is an approach used to model a linear relationship between an independent variable $x$ and a dependent variable $y$ by finding the slope of the trend and initial value ($y$ when $x$ is 0). It is used to represent existing data and predict future values; linear models are used both for interpolation and extrapolation. In this case, the model will be fit to existing data and used to predict future CO\textsubscript{2} levels. A linear growth function takes the general form of~\eqref{eq:lr}:
+    Linear regression is an approach used to model a linear relationship between an independent variable $x$ and a dependent variable $y$ by finding the slope of the trend and initial value ($y$ when $x$ is 0).
+    It is used to represent existing data and predict future values; linear models are used both for interpolation and extrapolation. In this case, the model will be fit to existing data and used to predict future CO\textsubscript{2} levels.
+    A linear growth function takes the general form of~\eqref{eq:lr}:
 
     \begin{equation}
         f(x) = \alpha x = \beta
         \label{eq:lr}
     \end{equation}
 
-    \noindent where $\alpha$ is the coefficient, or growth rate; and $\beta$ is the y-intercept, or initial value. The values of $\alpha$ and $\beta$ are ``optimized'' using an algorithm to model a given dataset with the minimum ``error''.
+    \noindent where $\alpha$ is the coefficient, or growth rate; and $\beta$ is the y-intercept, or initial value.
+    The values of $\alpha$ and $\beta$ are ``optimized'' using an algorithm to model a given dataset with the minimum ``error''.
 
-    One of the most common and simplest methods used to calculate the coefficient and intercept of the regression line is the Ordinary Least Square (OLS) \textit{optimization} method. In short, OLS minimizes the Square-Error for each point against a given linear function by adjusting the function\textquotesingle s parameters, which in the end produces optimal parameters for a equation in the form of a linear line of best fit.
+    One of the most common and simplest methods used to calculate the coefficient and intercept of the regression line is the Ordinary Least Square (OLS) \textit{optimization} method.
+    In short, OLS minimizes the Square-Error for each point against a given linear function by adjusting the function\textquotesingle s parameters, which in the end produces optimal parameters for a equation in the form of a linear line of best fit.
 
     The Square-\textit{Error} function, which is what OLS \textit{optimizes}, is simply a summation of the squares of the difference between actual values and predicted values, over all data points~\eqref{eq:ls}:
 
@@ -383,10 +391,14 @@
         \label{eq:co2_lr_inv}
     \end{equation}
 
-    $C$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2193. The regression line was then graphed and used to predict the next 30 years of CO\textsubscript{2} emissions; the actual data is also plotted for comparison (Fig.~\ref{fig:co2_lr}).
+    $C$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2193.
+    The regression line was then graphed and used to predict the next 30 years of CO\textsubscript{2} emissions; the actual data is also plotted for comparison (Fig.~\ref{fig:co2_lr}).
 
 
-    Linear regression is useful in relation to the problem as it is simple to interpret and portray, allowing the prediction of data to be accurate during interpolation. However, if the data to be predicted is outside of the range, such as predicting future CO\textsubscript{2} levels, extrapolation may be inaccurate due to a false assumption of the trend. Furthermore, if the variables plotted provide a non-linear relationship, a linear regression line may inaccurately represent and predict values, which is the case in the data provided. Statistical error of the linear regression model against existing data shows a good but not perfect accuracy (Table~\ref{tab:co2_lr_err}).
+    Linear regression is useful in relation to the problem as it is simple to interpret and portray, allowing the prediction of data to be accurate during interpolation.
+    However, if the data to be predicted is outside of the range, such as predicting future CO\textsubscript{2} levels, extrapolation may be inaccurate due to a false assumption of the trend.
+    Furthermore, if the variables plotted provide a non-linear relationship, a linear regression line may inaccurately represent and predict values, which is the case in the data provided.
+    Statistical error of the linear regression model against existing data shows a good but not perfect accuracy (Table~\ref{tab:co2_lr_err}).
 
     \begin{table}[h]
         \begin{minipage}{0.7\linewidth}
@@ -416,7 +428,7 @@
 
 
 
-    \subsection{Exponential Regression}
+    \subsection{Exponential}
     The second approach decided upon was exponential regression, which models the non-linear relationship between an independent variable $x$ and dependent variable $y$, where the rate of change of $y$ with respect to $x$ at a given point is proportional to the quantity itself.
     This choice was made based on visual indicators of the data given\textquotesingle s trend, where the line graph exhibited a possible exponential curve.
     Exponential growth functions take the general form of~\eqref{eq:exp}:
@@ -475,7 +487,8 @@
         C_i = 2^{0.023381 (i - 1707.690634)} + 256.024002
     \end{equation}
 
-    $y$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2081. The exponential model was graphed alongside the actual values and the linear model for comparison in Figure~\ref{fig:co2_exp}.
+    $y$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2081.
+    The exponential model was graphed alongside the actual values and the linear model for comparison in Figure~\ref{fig:co2_exp}.
 
     \begin{table}[h]
         \begin{minipage}{0.7\linewidth}
@@ -508,8 +521,10 @@
     However, a key drawback is that a large data set is necessary to carry this method out, as a reasonable amount of continuity is needed to accurately predict future values, especially during extrapolation.
 
 
-    \subsection{Logistic Regression}
-    The third predictive model selected shares similarities with the exponential model. One key difference however is that an exponential curve is J-shaped, whereas a logistic curve is sigmoid, the growth rate of the y-variable (CO\textsubscript{2}) increases during its lag phase, and eventually reaches a stationary phase. The logistic function has the equation:
+    \subsection{Sigmoid}
+    The third predictive model selected shares similarities with the exponential model.
+    One key difference however is that an exponential curve is J-shaped, whereas a logistic curve is sigmoid, the growth rate of the y-variable (CO\textsubscript{2}) increases during its lag phase, and eventually reaches a stationary phase.
+    The logistic function has the equation:
 
     ${\displaystyle f(x)={\frac {L}{1+e^{-k(x-x_{0})}}}}$
 
@@ -523,11 +538,33 @@
 
     The function\textquotesingle s parameters were then manually adjusted to best suit the current data set, giving the following equation: ${y = 2523.6 / (1 + e^{(-0.017587 * (x - 2175.5))}) + 260.0180641636529}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm, it was found that it would reach this level at the year 2193. The equation was then graphed alongside with the regression lines of the two previous models to obtain the following graph:
 
-    \begin{center}
-        \frame{\includegraphics[scale=0.6]{logistic_2040}}
-    \end{center}
+    \begin{table}[h]
+        \begin{minipage}{0.7\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{co2_sigm_565}%
+            \captionof{figure}{Graph of Sigmoid Regression}
+            \label{fig:co2_logi}
+        \end{minipage}%
+        \begin{minipage}{0.3\linewidth}
+            \centering
+            \begin{tabular}{ll}
+                \toprule
+                Metric               & Value  \\
+                \midrule
+                MSE                  & 0.61002 \\
+                RMSE                 & 0.78104 \\
+                MAE                  & 0.66351 \\
+                PCC                  & 0.99965 \\
+                R\textsuperscript{2} & 0.99930 \\
+                CVAR                 & 889.87 \\
+                \bottomrule
+            \end{tabular}
+            \caption{Error Metrics for Sigmoid Regression}
+            \label{tab:co2_logi_err}
+        \end{minipage}
+    \end{table}
 
-    As can be seen, the logistic curve follows a very similar path to that of the exponential function. However, the 1959-2050 year range is too small to depict the sigmoid point, so the functions were graphed to reach the year 2400:
+    As can be seen, the logistic curve follows a very similar path to that of the exponential function. However, the 1959--2050 year range is too small to depict the sigmoid point, so the functions were graphed to reach the year 2400:
 
     \begin{center}
         \frame{\includegraphics[scale=0.6]{logistic_2400}}
@@ -644,7 +681,7 @@ q1
         \item ${\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$ = Squares of the errors
     \end{itemize}
 
-     MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE.
+     MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE\@.
 
     \subsubsection{RMSE}
     Root Mean Squared Error (RMSE) is the square root of the MSE, measuring the standard deviation of the residuals. The higher the RMSE value, the larger the deviation between actual and predicted values. By proxy, the lower the RMSE value, the lower the deviation, hence the model is more accurate. Building on the last error metric formula, RMSE can be denoted as:
