@@ -19,6 +19,10 @@
 \usepackage{textcomp}
 \usepackage{changepage}
 \usepackage{siunitx}
+\usepackage{lstmisc}
+\usepackage{booktabs}
+\usepackage{blindtext}
+\usepackage{capt-of}
 
 %\addbibresource{citations.bib}
 
@@ -40,6 +44,14 @@
     \maketitle
     \tableofcontents
     \newpage
+
+
+    \includepdf[
+        pages=-,
+        addtotoc={1,section,1,New Report,a1}
+    ]{article.pdf}
+
+
 
 
     \section{Introduction}
@@ -139,6 +151,27 @@
 
     \noindent\textbf{Relative Temperature}: Global average temperature, relative to the baseline average temperature from 1951 to 1980, in degrees Celsius.
 
+    \noindent\textbf{Error Metric Abbreviations}: See Table~\ref{tab:err_abb}.
+
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{ll}
+            \toprule
+            Abb. & Full \\
+            \midrule
+            MSE & Mean Squared-Error \\
+            RMSE & Square root of MSE \\
+            MAE & Mean Absolute Error \\
+            PCC & Pearson's Correlation Coefficient \\
+            R\textsuperscript{2} & Coefficient of Determination, or PCC Squared \\
+            CVAR & Covariance \\
+            \bottomrule
+        \end{tabular}
+        \caption{Abbreviations of Error Metrics}
+        \label{tab:err_abb}
+    \end{table}
+
+
 
     \subsection{Assumptions and Justifications}
     \noindent\textbf{Assumption 1}: CO\textsubscript{2}, as a greenhouse gas, has a true case-and-effect relationship with temperature.
@@ -153,6 +186,7 @@
 
     \subsection{General Variables}
     See table~\ref{tab:my_label}:
+
     \begin{table}[h!]
         \centering
         \begin{tabular}{cc}
@@ -169,6 +203,94 @@
         \label{tab:my_label}
     \end{table}
 
+
+
+    \section{The Generic Modelling Procedure}
+    In this section, the generic procedure to produce specific models for a given task is stated and explained. All relevant information; such as metrics, concepts, and terms; are explained and directly referred to later. This section helps avoid bloat in the paper by isolating generic baseline information to prevent repetition and confusion.
+
+
+    \subsection{Modelling, Conceptually}
+
+    ``A mathematical model is a description of a \textit{system} using mathematical concepts and language.'' (wikipedia reference) A completed math model should describe/simulate it\textquotesingle s target system to the best of its ability. All models behave like a (complex) function~\eqref{eq:model_func} - it produces outputs when given inputs. For this problem, the \textit{system}s to be modelled are atmospheric CO\textsubscript{2} and global warming.
+
+    \begin{equation}
+        y = f(x)
+        \label{eq:model_func}
+    \end{equation}
+
+    \noindent where $y$ is the output, $x$ is the input, and $f$ is the model itself.
+
+
+    \subsection{Time Series}
+
+    Inputs and outputs differ depending on the type of the model, but one type relevant to this paper is are time-series\textquotesingle . In a time-series model, the input is a timeframe, and the output describes the state of a system it is modelling; conceptually, a time-series models the evolution of a possibly boundless dynamic system over time~\eqref{eq:model_ts}. This will be useful later to, for example, model the change of CO\textsubscript{2} levels over time. Time-series\textquotesingle~belong to the family of relationship models, which produces outputs based on an input variable, effectively translation values between two variables. This will be useful later to model the relationship between CO\textsubscript{2} levels and temperature change.
+
+    \begin{equation}
+        \begin{aligned}
+            t & \rightarrow y \\
+            \Delta t & \rightarrow \Delta y + y_0
+        \end{aligned}
+        \label{eq:model_ts}
+    \end{equation}
+
+    \noindent where $y$ is the output, $t$ is the time or input, and $y_0$ is the initial state (when modelling relative evolution over time).
+
+
+    \subsection{Quantitative Data}
+
+    Because math models are strictly quantitative, a pre-defined procedure must exist to translate between real-world parameters and numeric values. For most systems, this can be done using existing scientific measurements and units. Otherwise, custom metrics have to be defined. With the given problem, there are simple metrics for both CO\textsubscript{2} levels in the atmosphere and global warming, concentration in parts-per-million and temperature in degrees Celsius, respectively. In terms of time, years are already represented numerically.
+
+    Once the system can be represented quantitatively and a quantitative output can be interpreted as a state of the system, a math model can be constructed. There are many different approaches to construct a model from numerical representations of a system, but this paper focuses on ``fitting'' ``generic models'' to true/historical numeric data.
+
+
+    \subsection{Function Regression}
+
+    In short, a ``generic model'' is a mathematical function parameterized by a variable amount of constants within its definition~\eqref{eq:model_g}. The function exhibits specific characteristics regardless of the values of its parameters. The end goal of modelling is to adjust these parameters such that the function can produce the most accurate output (compared to the real system) for each given input. In the case of modelling CO\textsubscript{2} levels as a time-series, the model function should produce ppm values for a given year.
+
+    \begin{equation}
+        \begin{aligned}
+            \bm{\beta} &= [p_1, p_2, p_3, p_4, \dots] \\
+            f(x) &= g(x, \bm{\beta}) \\
+            y &= f(x)
+        \end{aligned}
+        \label{eq:model_g}
+    \end{equation}
+
+    \noindent where $g$ is the generic model, and $f$ is a constructed model by finding specific values for each of the parameters $p_i$. $\bm{\beta}$ is simply a vector that encapsulates all of the parameters.
+
+
+    \subsection{Error Metrics}
+
+    ``Fitting'' a model, also known as ``optimization'', is a systematic approach to find parameters that ``best'' models the given system. Usually, an error function is defined to quantitatively gauge how accurate or good the model is by calculating a metric based on the difference between the actual output and expected output for a given input~\eqref{eq:model_diff}. The optimization process tries to produce the ``best'' model by minimizing the error function across all available data values. For example,~\eqref{eq:model_sqd} is a square-error function that gives the sum of square-errors for all data points.
+
+    \begin{equation}
+        E(y) \approx y - \hat y
+        \label{eq:model_diff}
+    \end{equation}
+    \begin{equation}
+        E = \sum_{i=1}^{n} (f(x_i) - \hat y_i)^2
+        \label{eq:model_sqd}
+    \end{equation}
+
+
+    \subsection{Optimization}
+
+    The optimization process aims to minimize the (sum of the) error function.
+    A generic approach is to take partial derivatives of the summed error with respect to every parameter in the model. This allows the minimum to be calculated by equating the differential functions to 0.
+    Generally, the partial derivative of error $E$ with respect to parameter $\beta_j$ is:
+
+    \begin{equation}
+        \begin{aligned}
+            \frac{\partial E}{\partial \beta_j} &= 2 \sum_i e_i \frac{\partial e_i}{\partial \beta_j} \\
+            \frac{\partial E}{\partial \beta_j} &= -2\sum_i e_i\frac{\partial f(x_i,\boldsymbol \beta)}{\partial \beta_j}
+        \end{aligned}
+    \end{equation}
+
+    \noindent where $e$ is the error, and $j = 1, \ldots, m$ for $m$ parameters in $\beta$
+
+%    \begin{equation}
+%
+%    \end{equation}
 
 
     \section{CO\textsubscript{2} - Modelling}
@@ -200,46 +322,190 @@
 
 
     \subsection{Linear Regression}
-    As the simples model, a linear regression is performed first.
+    A linear regression is performed first due to its simplicity and ability to help pick more complex models.
 
-    Linear regression is an approach used to model the linear relationship between an independent variable (x) and dependent variable (y), by fitting a linear equation. It is used to present the past values and predict others, in this case future CO\textsubscript{2} emissions. One of the most common and simplest methods used to obtain a regression line is the Ordinary Least Square (OLS) method. In short, OLS minimizes the Square-Error for each point against a given linear function by adjusting the function\textquotesingle s parameters, which in the end produces an equation for the linear line of best fit.
-
-    To perform the method, a difference is first set between the dependent variable (CO\textsubscript{2}) and its estimation: ${(y - \hat{y})}$. The difference is then squared, and a summation taken for the entire data set: ${\displaystyle S = \sum (y - \hat{y}^2)}$. To obtain the parameters that make the sum of square difference become minimum, a partial derivative is taken for each parameter, then equated to 0: $\displaystyle \frac{d S}{d \alpha} = 0$. The final formula for OLS that is obtained is denoted as:
+    Linear regression is an approach used to model a linear relationship between an independent variable $x$ and a dependent variable $y$ by finding the slope of the trend and initial value ($y$ when $x$ is 0). It is used to represent existing data and predict future values; linear models are used both for interpolation and extrapolation. In this case, the model will be fit to existing data and used to predict future CO\textsubscript{2} levels. A linear growth function takes the general form of~\eqref{eq:lr}:
 
     \begin{equation}
-        S = \sum{(y - \hat{y})^2} = \sum{(y - ax - b)^2}
-        \label{eq:ols}
+        f(x) = \alpha x = \beta
+        \label{eq:lr}
     \end{equation}
 
+    \noindent where $\alpha$ is the coefficient, or growth rate; and $\beta$ is the y-intercept, or initial value. The values of $\alpha$ and $\beta$ are ``optimized'' using an algorithm to model a given dataset with the minimum ``error''.
 
-    The formula was applied to the given data set to obtain the following line equation:
+    One of the most common and simplest methods used to calculate the coefficient and intercept of the regression line is the Ordinary Least Square (OLS) \textit{optimization} method. In short, OLS minimizes the Square-Error for each point against a given linear function by adjusting the function\textquotesingle s parameters, which in the end produces optimal parameters for a equation in the form of a linear line of best fit.
+
+    The Square-\textit{Error} function, which is what OLS \textit{optimizes}, is simply a summation of the squares of the difference between actual values and predicted values, over all data points~\eqref{eq:ls}:
 
     \begin{equation}
-        y = 1.6140361 x - 2854.59326421
+        E = \sum{(y - \hat{y})^2}
+        \label{eq:ls}
+    \end{equation}
+
+    Because the predicted values $\hat{y}$ for a linear model is modelled as $\alpha x + \beta$, the Square-Error function for a linear model can be more specific~\eqref{eq:ls_lr}:
+
+    \begin{equation}
+        E = \sum{(y - (\alpha x - \beta))^2}
+        \label{eq:ls_lr}
+    \end{equation}
+
+    OLS calculates the values of $\alpha$ and $\beta$ which minimize $S$ in the summation above.
+    Unlike the generic differential method described above, OLS is specialized for linear functions and can calculate the optimal parameters in one stop, using summation ratios.
+    The coefficient $\alpha$, or the linear trend of the dataset can be calculated with~\eqref{eq:lr_coef}:
+
+    \begin{equation}
+        \alpha = \frac{n \sum x_i y_i - \sum x_i \sum y_i }{n \sum x^2_i - (\sum x_i)^2}
+        \label{eq:lr_coef}
+    \end{equation}
+
+    \noindent where $n$ is the number of data points.
+
+    After calculating the slope of the trend, the intercept $\beta$, is calculated by~\eqref{eq:lr_intc}:
+
+    \begin{equation}
+        \beta = \bar y - \beta \bar x
+        \label{eq:lr_intc}
+    \end{equation}
+
+    OSL was applied to the given data set to obtain the coefficient $\alpha$ and the y-intercept $\beta$ - $1.6140361$ and $2854.59326421$, respectively - which corresponds to the following linear equation:
+
+    \begin{equation}
+        C_i = 1.6140361 i - 2854.59326421
         \label{eq:co2_lr}
     \end{equation}
 
-    {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2193. The regression line was then graphed and used to predict the next 30 years of CO\textsubscript{2} emissions, the actual data was also plotted for comparison:
+    \noindent where $i$ is the year.
 
-    \begin{center}
-        \frame{\includegraphics[scale=0.75]{linear}}
-    \end{center}
+    The inverse of the function is derived by solving for $i$ in terms of $C$:
 
-    Linear regression is useful in relation to the problem as it is simple to interpret and portray, allowing the prediction of data to be accurate during interpolation. However, if the data to be predicted is outside of the range, such as predicting future CO\textsubscript{2} levels, extrapolation may be inaccurate due to a false assumption of the trend. Furthermore, if the variables plotted provide a non-linear relationship, a linear regression line may inaccurately represent and predict values, which is the case in the data provided.
+    \begin{equation}
+        C^{-1}_i = \frac{C + 2854.59326421}{1.6140361}
+        \label{eq:co2_lr_inv}
+    \end{equation}
+
+    $C$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2193. The regression line was then graphed and used to predict the next 30 years of CO\textsubscript{2} emissions; the actual data is also plotted for comparison (Fig.~\ref{fig:co2_lr}).
+
+
+    Linear regression is useful in relation to the problem as it is simple to interpret and portray, allowing the prediction of data to be accurate during interpolation. However, if the data to be predicted is outside of the range, such as predicting future CO\textsubscript{2} levels, extrapolation may be inaccurate due to a false assumption of the trend. Furthermore, if the variables plotted provide a non-linear relationship, a linear regression line may inaccurately represent and predict values, which is the case in the data provided. Statistical error of the linear regression model against existing data shows a good but not perfect accuracy (Table~\ref{tab:co2_lr_err}).
+
+    \begin{table}[h]
+        \begin{minipage}{0.7\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{linear}%
+            \captionof{figure}{Graph of given CO\textsubscript{2} data}
+            \label{fig:co2_lr}
+        \end{minipage}%
+        \begin{minipage}{0.3\linewidth}
+            \centering
+            \begin{tabular}{ll}
+                \toprule
+                Metric               & Value  \\
+                \midrule
+                MSE                  & 15.376 \\
+                RMSE                 & 3.9212 \\
+                MAE                  & 3.1920 \\
+                PCC                  & 0.9912 \\
+                R\textsuperscript{2} & 0.9825 \\
+                CVAR                 & 875.32 \\
+                \bottomrule
+            \end{tabular}
+            \caption{Error Metrics for Linear Regression}
+            \label{tab:co2_lr_err}
+        \end{minipage}
+    \end{table}
+
 
 
     \subsection{Exponential Regression}
-    The second approach decided upon was exponential regression, which models the non-linear relationship between an independent variable (x) and dependent variable (y). This choice was made based on visual indicators of the data given\textquotesingle s trend, exhibiting a possible exponential curve. The regression curve portrays data rapidly increasing; at an exponential rate. In exponential regression, the correlation can be denoted as:
+    The second approach decided upon was exponential regression, which models the non-linear relationship between an independent variable $x$ and dependent variable $y$, where the rate of change of $y$ with respect to $x$ at a given point is proportional to the quantity itself.
+    This choice was made based on visual indicators of the data given\textquotesingle s trend, where the line graph exhibited a possible exponential curve.
+    Exponential growth functions take the general form of~\eqref{eq:exp}:
 
-    ${\log(y) = \log (A) + B t}$
+    \begin{equation}
+        f(x) = \alpha^x
+        \label{eq:exp}
+    \end{equation}
 
-    An exponential function contains a base and an exponent where: ${y = a b ^x}$. This function was then applied to the given data set to form the equation: ${y = 1.005717^(2.8427x - 4854.4) + 256.024}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2079. The equation was graphed alongside the actual values and linear regression line for comparison:
+    \noindent where $\alpha$ is the growth factor, or the base (minus one); and $\beta$ is the initial value, or the y-intercept.
 
-    \begin{center}
-        \frame{\includegraphics[scale=0.6]{exponential}}
-    \end{center}
+    However, in order to fit such a model to arbitrary (non-normalized) values, two additional parameters have to be added to allow for displacement translations of the function on both axis. This gives~\eqref{eq:exp2}:
 
-    Visually, the exponential function better aligns with the actual values; the predicted values also seem to fit with the general trend. An advantage of exponential regression as a predictive model is that it provides high quality forecasts, which increase the accuracy of predicted values during interpolation. However, a key drawback is that a large data set is necessary to carry this method out, as a reasonable amount of continuity is needed to accurately predict future values, especially during extrapolation.
+    \begin{equation}
+        f(x) = \beta (1 + \alpha)^{x + a} + b
+        \label{eq:exp2}
+    \end{equation}
+
+    \noindent where $a$ and $b$ allows for offsets in the x and y axis, respectively.
+    One optimization can be made here - the equation can be rearranged to only have 3 parameters yet still be able to fit to any scale and offset of values~\eqref{eq:exp3}:
+
+    \begin{equation}
+        f(x) = B^{b (x + a)} + c
+        \label{eq:exp3}
+    \end{equation}
+
+    \noindent where $B$, the base, can be any positive constant, and the function is parameterized by $a$, $b$, and $c$.
+    This reduction in parameters allows for a higher efficiency when regressing the function to the dataset programmatically.
+    In the actual regression, 2 was used for the value of $B$.
+
+    Unlike linear regression, trying to fit an exponential function to a data set would theoretically require complex methods such as partial derivatives.
+    However, a programmatic approach was taken, and the function was regressed ``blindly'' iteratively using gradient descent from derivative estimates.
+    The \verb|curve_fit()| optimizer from the SciPy library for Python can optimize any non-linear function to a data set blindly - without knowing the algebraic denotation of the function.
+    It is able to optimize unknown functions by performing gradient estimates for the values of the parameters:
+
+    \begin{equation}
+        G = \frac{f(x + \Delta x) - f(x)}{\Delta x}
+    \end{equation}
+
+    \noindent where $G$ is the gradient of function $f$ at point $x$.
+    $\Delta h$ is taken to be a very small value to increase accuracy for sensitive functions.
+
+    Being able to calculate gradients of the error function at any point of the model function, a gradient descent algorithm is used to iteratively minimize the error function.
+    The parameters are adjusted based on their calculated error gradients:
+
+    \begin{equation}
+        \beta_j \longleftarrow \beta_j - \alpha \frac{E(x, \beta + \Delta \beta_j) - E(x, \beta)}{\Delta \beta_j}
+    \end{equation}
+
+    \noindent where parameter $\beta_j$ is adjusted based the error function $E$\textquotesingle s gradient - the parameter changes in to the opposite direction of the gradient in order to find the minimum of the error function.
+    $\alpha$, the learning rate, is usually a very small value to prevent the parameters from changing too much at once.
+
+    This optimizer was applied to the given data to obtain the optimized model:
+
+    \begin{equation}
+        C_i = 2^{0.023381 (i - 1707.690634)} + 256.024002
+    \end{equation}
+
+    $y$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2081. The exponential model was graphed alongside the actual values and the linear model for comparison in Figure~\ref{fig:co2_exp}.
+
+    \begin{table}[h]
+        \begin{minipage}{0.7\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{exponential}%
+            \captionof{figure}{Graph of Exponential Regression}
+            \label{fig:co2_exp}
+        \end{minipage}%
+        \begin{minipage}{0.3\linewidth}
+            \centering
+            \begin{tabular}{ll}
+                \toprule
+                Metric               & Value  \\
+                \midrule
+                MSE                  & 0.48061 \\
+                RMSE                 & 0.69326 \\
+                MAE                  & 0.56981 \\
+                PCC                  & 0.99973 \\
+                R\textsuperscript{2} & 0.99945 \\
+                CVAR                 & 890.45 \\
+                \bottomrule
+            \end{tabular}
+            \caption{Error Metrics for Exponential Regression}
+            \label{tab:co2_exp_err}
+        \end{minipage}
+    \end{table}
+
+    Visually, the exponential function better aligns with the actual values; the predicted values also seem to fit with the general trend, and this is confirmed by extremely good error metrics, as show in Table~\ref{tab:co2_exp_err}.
+    An advantage of exponential regression as a predictive model is that it provides high quality forecasts, which increase the accuracy of predicted values during interpolation.
+    However, a key drawback is that a large data set is necessary to carry this method out, as a reasonable amount of continuity is needed to accurately predict future values, especially during extrapolation.
 
 
     \subsection{Logistic Regression}
