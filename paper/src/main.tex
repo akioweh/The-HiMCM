@@ -1,4 +1,4 @@
-\documentclass{mcmthesis}
+\documentclass[12pt]{mcmthesis}
 \mcmsetup{CTeX = false,
     tcn = {12833},  %% your team control number
     problem = {B}, %% your chosen problem (A or B)
@@ -26,9 +26,15 @@
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocodex}
+\usepackage{tocloft}
+\usepackage{sansmathfonts}
+\usepackage[T1]{fontenc}
+\renewcommand*\familydefault{\sfdefault}
+
+\renewcommand*\familydefault{\sfdefault}
+
 
 %\addbibresource{citations.bib}
-
 
 
 %! suppress = LineBreak
@@ -55,7 +61,14 @@
     \end{abstract}
 
     \maketitle
+
+    \setcounter{page}{2}
+
+    \setlength{\cftparskip}{0pt}
+%    \renewcommand{\baselinestretch}{0}\normalsize
     \tableofcontents
+%    \renewcommand{\baselinestretch}{0.8}\normalsize
+
     \newpage
 
 
@@ -217,7 +230,7 @@
     \section{The Generic Modelling Procedure}
     In this section, the generic procedure to produce specific models for a given task is stated and explained. All relevant information; such as metrics, concepts, and terms; are explained and directly referred to later. This section helps avoid bloat in the paper by isolating generic baseline information to prevent repetition and confusion.
 
-    \subsection{Modelling, Conceptually}
+    \subsection*{Modelling, Conceptually}
 
     ``A mathematical model is a description of a \textit{system} using mathematical concepts and language.'' (wikipedia reference) A completed math model should describe/simulate it\textquotesingle s target system to the best of its ability. All models behave like a (complex) function~\eqref{eq:model_func} - it produces outputs when given inputs. For this problem, the \textit{system}s to be modelled are atmospheric CO\textsubscript{2} and global warming.
 %
@@ -228,7 +241,7 @@
 %
     \noindent where $y$ is the output, $x$ is the input, and $f$ is the model itself.
 
-    \subsection{Time Series}
+    \subsection*{Time Series}
 
     Inputs and outputs differ depending on the type of the model, but one type relevant to this paper is are time-series\textquotesingle . In a time-series model, the input is a timeframe, and the output describes the state of a system it is modelling; conceptually, a time-series models the evolution of a possibly boundless dynamic system over time~\eqref{eq:model_ts}. This will be useful later to, for example, model the change of CO\textsubscript{2} levels over time. Time-series\textquotesingle~belong to the family of relationship models, which produces outputs based on an input variable, effectively translation values between two variables. This will be useful later to model the relationship between CO\textsubscript{2} levels and temperature change.
 %
@@ -242,13 +255,13 @@
 %
     \noindent where $y$ is the output, $t$ is the time or input, and $y_0$ is the initial state (when modelling relative evolution over time).
 
-    \subsection{Quantitative Data}
+    \subsection*{Quantitative Data}
 
     Because math models are strictly quantitative, a pre-defined procedure must exist to translate between real-world parameters and numeric values. For most systems, this can be done using existing scientific measurements and units. Otherwise, custom metrics have to be defined. With the given problem, there are simple metrics for both CO\textsubscript{2} levels in the atmosphere and global warming, concentration in parts-per-million and temperature in degrees Celsius, respectively. In terms of time, years are already represented numerically.
 
     Once the system can be represented quantitatively and a quantitative output can be interpreted as a state of the system, a math model can be constructed. There are many different approaches to construct a model from numerical representations of a system, but this paper focuses on ``fitting'' ``generic models'' to true/historical numeric data.
 
-    \subsection{Function Regression}
+    \subsection*{Function Regression}
 
     In short, a ``generic model'' is a mathematical function parameterized by a variable amount of constants within its definition~\eqref{eq:model_g}. The function exhibits specific characteristics regardless of the values of its parameters. The end goal of modelling is to adjust these parameters such that the function can produce the most accurate output (compared to the real system) for each given input. In the case of modelling CO\textsubscript{2} levels as a time-series, the model function should produce ppm values for a given year.
 %
@@ -263,7 +276,7 @@
 %
     \noindent where $g$ is the generic model, and $f$ is a constructed model by finding specific values for each of the parameters $p_i$. $\bm{\beta}$ is simply a vector that encapsulates all of the parameters.
 
-    \subsection{Error Metrics}
+    \subsection*{Error Metrics}
 
     ``Fitting'' a model, also known as ``optimization'', is a systematic approach to find parameters that ``best'' models the given system. Usually, an error function is defined to quantitatively gauge how accurate or good the model is by calculating a metric based on the difference between the actual output and expected output for a given input~\eqref{eq:model_diff}. The optimization process tries to produce the ``best'' model by minimizing the error function across all available data values. For example,~\eqref{eq:model_sqd} is a square-error function that gives the sum of square-errors for all data points.
 %
@@ -277,7 +290,7 @@
         \label{eq:model_sqd}
     \end{equation}
 
-    \subsection{Optimization}
+    \subsection*{Optimization}
 
     The optimization process aims to minimize the (sum of the) error function.
     A generic approach is to take partial derivatives of the summed error with respect to every parameter in the model. This allows the minimum to be calculated by equating the differential functions to 0.
@@ -537,18 +550,46 @@
 
     \subsection{Sigmoid}
     The third predictive model selected shares similarities with the exponential model.
-    One key difference however is that an exponential curve is J-shaped, whereas a logistic curve is sigmoid, the growth rate of the y-variable (CO\textsubscript{2}) increases during its lag phase, and eventually reaches a stationary phase.
-    The logistic function has the equation:
+    While most sigmoid functions, when the domain is restricted, may behave very similar to an exponential function, the difference is that sigmoid functions also have an upper asymptote.
+    The function has a S-shaped curve, comparable to two exponential functions, one with a negative exponent and one with a positive exponent, that are joined at the point of inflection.
+    Sigmoid functions are commonly used to model growth variables with a natrual limit.
+    The most common sigmoid function is the logistic function, which takes the general form of:
+%
+    \begin{equation}
+        f(x) = \frac{L}{1 + e^{-k(x - x_0)}}
+        \label{eq:logi}
+    \end{equation}
+%
+    where
+    $L$ is the curve\textquotesingle s maximum value,
+    $k$ is the logistic growth rate, and
+    $x_0$ is the x value of the sigmoid midpoint.
 
-    ${\displaystyle f(x)={\frac {L}{1+e^{-k(x-x_{0})}}}}$
+    The standard logistic function is, however, pretty limited; the minimum asymptote is fixed at zero and the shape of the curve is fixed other than the growth rate, which reflects the gradient at the midpoint.
+    In order to fit to the CO\textsubscript{2} dataset, a more generalized and adjustable sigmoid function is used:
+%
+    \begin{equation}
+        f(x) = \frac{x-x_{0}}{\left(s^{-z}+\frac{2\left|x-x_{0}\right|}{y_{max}-y_{min}}^{z}\right)^{\frac{1}{z}}}+\frac{y_{max}-y_{min}}{2}+y_{min}
+    \end{equation}
+%
+    where
+    $x_0$ is the x value of the sigmoid midpoint,
+    $s$ is the growth rate or slope at the midpoint,
+    $z$ governs the shape of the curve,
+    $y_{max}$ is the maximum y value, and
+    $y_{min}$ is the minimum y value.
 
-    Where:
-    \begin{itemize}
-        \item {L} = Curve\textquotesingle s maximum value
-        \item {k} = Logistic growth rate
-        \item ${x_0}$ = X value of the sigmoid point
-        \item {x} = Real number
-    \end{itemize}
+    Removing parameters that allow linear transformations, the sigmoid function can be simplified to:
+%
+    \begin{equation}
+        f(x) = \frac{x}{\left(s^{-z}+\frac{\left|x\right|}{L}^{z}\right)^{\frac{1}{z}}}
+    \end{equation}
+%
+    and by removing the $z$ parameter, a basic algebraic sigmoid function remains:
+%
+    \begin{equation}
+        f(x) = \frac{x}{s^{-1}+{\left|x\right|}/{L}}
+    \end{equation}
 
     The function\textquotesingle s parameters were then manually adjusted to best suit the current data set, giving the following equation: ${y = 2523.6 / (1 + e^{(-0.017587 * (x - 2175.5))}) + 260.0180641636529}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm, it was found that it would reach this level at the year 2193. The equation was then graphed alongside with the regression lines of the two previous models to obtain the following graph:
 
@@ -681,7 +722,7 @@
 
     \subsection{Accuracy Analysis}
 
-    \subsubsection{MSE}
+    \subsubsection*{MSE}
     Mean Squared Error (MSE) is a measure of the quality of a predictor or of an assessor, its definition differing accordingly. It is the average squared distance between the actual and predicted values, measuring the variance of the residuals. In this case, only the quality of the predictor is to be assessed. It involves taking the average squared distance between the actual and predicted values, measuring the variance of the residuals. The within-sample MSE of a predictor can then be denoted as:
 
     ${\operatorname {MSE} ={\frac {1}{n}}\sum _{i=1}^{n}\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$
@@ -694,14 +735,14 @@
 
     MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE\@.
 
-    \subsubsection{RMSE}
+    \subsubsection*{RMSE}
     Root Mean Squared Error (RMSE) is the square root of the MSE, measuring the standard deviation of the residuals. The higher the RMSE value, the larger the deviation between actual and predicted values. By proxy, the lower the RMSE value, the lower the deviation, hence the model is more accurate. Building on the last error metric formula, RMSE can be denoted as:
 
     ${\operatorname {RMSE} = \sqrt{MSE}}$
 
     When outliers are exponentially rare, such as this situation, RMSE is generally preferred over MSE as it provides a better evaluation of model performance, as it uses the same units as the Y axis (CO\textsubscript{2} emissions).
 
-    \subsubsection{MAE}
+    \subsubsection*{MAE}
     Mean Absolute Error (MAE) is the sum of the absolute difference between the actual and predicted values. A perfect prediction model would yield a 0 as its MAE value. The further away from 0 the MAE value is, the more errors the model makes and hence the less accurate the model is. The formula to calculate MAE is denoted as:
 
     ${\displaystyle {MAE} ={\frac {\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}{n}}}$
@@ -712,17 +753,14 @@
         \item {n} = Number of errors
     \end{itemize}
 
-    \subsubsection{PMCC, ${R^2}$ AND COVARIANCE}
+    \subsubsection*{PMCC, ${R^2}$ AND COVARIANCE}
     The last 3 error metrics are explained in further detail when exploring the relationship between temperature and CO\textsubscript{2} emissions
 
-    \subsubsection{Results}
+    \subsubsection*{Results}
     The MSE, RMSE, MAE, PMCC, R\textsuperscript{2} and covariance were calculated for each accepted model, rounded to 5 s.f, and compiled into a results table below. For each error metric, the model with the value closest to and furthest from a perfect value were highlighted:
 
     ---------------A TABLE, AGAIN.-------------------
     --------------LO AND BEHOLD, ANOTHER TABLE--------------
-
-    \subsection{Sensitivity Analysis}
-    blah blah
 
     \subsection{Overall Evaluation}
 

@@ -52,7 +52,7 @@
 \RequirePackage{pifont, calc}
 \RequirePackage{colortbl, booktabs}
 \RequirePackage{geometry}
-\RequirePackage[T1]{fontenc}
+%\RequirePackage[T1]{fontenc}
 \RequirePackage[scaled]{berasans}
 \RequirePackage{hyperref}
 \RequirePackage{ifpdf, ifxetex}
