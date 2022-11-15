@@ -23,6 +23,9 @@
 \usepackage{booktabs}
 \usepackage{blindtext}
 \usepackage{capt-of}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{algpseudocodex}
 
 %\addbibresource{citations.bib}
 
@@ -54,8 +57,6 @@
     ]{article.pdf}
 
 
-
-
     \section{Introduction}
 
     \subsection{Background}
@@ -65,7 +66,6 @@
     The concentration of CO\textsubscript{2} in the atmosphere reached 377.7 ppm in March 2004, resulting in the largest 10-year average increase up to that time.
     According to scientists from National Oceanographic and Atmospheric Administration (NOAA) and Scripps Institution of Oceanography (SIO) the monthly mean CO\textsubscript{2} concentration level peaked at 421 ppm in May 2022.
     An Organisation for Economic Co-Operations and Development (OECD) report predicts a CO\textsubscript{2} level of 685 ppm by 2050.
-
 
     \subsection{Problem Analysis}
     \noindent\textbf{Problem 1: CO\textsubscript{2} level Forecasting}
@@ -147,7 +147,6 @@
         \makebox[\textwidth]{\includegraphics[width=\textwidth]{plan}}
     \end{center}
 
-
     \subsection{Keyword Definitions}
     \noindent\textbf{CO\textsubscript{2} Level/Content}: Global average concentration of CO\textsubscript{2} in the atmosphere, in parts-per-million (ppm).
 
@@ -159,21 +158,19 @@
         \centering
         \begin{tabular}{ll}
             \toprule
-            Abb. & Full \\
+            Abb.                 & Full                                         \\
             \midrule
-            MSE & Mean Squared-Error \\
-            RMSE & Square root of MSE \\
-            MAE & Mean Absolute Error \\
-            PCC & Pearson's Correlation Coefficient \\
+            MSE                  & Mean Squared-Error                           \\
+            RMSE                 & Square root of MSE                           \\
+            MAE                  & Mean Absolute Error                          \\
+            PCC                  & Pearson's Correlation Coefficient            \\
             R\textsuperscript{2} & Coefficient of Determination, or PCC Squared \\
-            CVAR & Covariance \\
+            CVAR                 & Covariance                                   \\
             \bottomrule
         \end{tabular}
         \caption{Abbreviations of Error Metrics}
         \label{tab:err_abb}
     \end{table}
-
-
 
     \subsection{Assumptions and Justifications}
     \noindent\textbf{Assumption 1}: CO\textsubscript{2}, as a greenhouse gas, has a true case-and-effect relationship with temperature.
@@ -186,8 +183,6 @@
     \vspace{-6pt}
     \noindent\textbf{Justification}: Accurate predictions are always based on accurate data. Since official data is given along the problem, they will be taken and treated assuming the absence of mistakes and errors.
 
-
-
     \subsection{General Variables}
     See table~\ref{tab:my_label}:
 
@@ -195,12 +190,12 @@
         \centering
         \begin{tabular}{cc}
             \toprule
-            Variable & Definition      \\
+            Variable   & Definition                                                 \\
             \midrule
-            $C_i$      & CO\textsubscript{2} level at year $i$     \\
-            $T_i$      & Temperature at year $i$     \\
+            $C_i$      & CO\textsubscript{2} level at year $i$                      \\
+            $T_i$      & Temperature at year $i$                                    \\
             $C^{-1}_i$ & Year where (predicted) CO\textsubscript{2} is at level $i$ \\
-            $T^{-1}_i$ & Year where (predicted) Temperature is at $i$ \\
+            $T^{-1}_i$ & Year where (predicted) Temperature is at $i$               \\
             \bottomrule
         \end{tabular}
         \caption{General Variables}
@@ -208,10 +203,8 @@
     \end{table}
 
 
-
     \section{The Generic Modelling Procedure}
     In this section, the generic procedure to produce specific models for a given task is stated and explained. All relevant information; such as metrics, concepts, and terms; are explained and directly referred to later. This section helps avoid bloat in the paper by isolating generic baseline information to prevent repetition and confusion.
-
 
     \subsection{Modelling, Conceptually}
 
@@ -223,7 +216,6 @@
     \end{equation}
 
     \noindent where $y$ is the output, $x$ is the input, and $f$ is the model itself.
-
 
     \subsection{Time Series}
 
@@ -239,13 +231,11 @@
 
     \noindent where $y$ is the output, $t$ is the time or input, and $y_0$ is the initial state (when modelling relative evolution over time).
 
-
     \subsection{Quantitative Data}
 
     Because math models are strictly quantitative, a pre-defined procedure must exist to translate between real-world parameters and numeric values. For most systems, this can be done using existing scientific measurements and units. Otherwise, custom metrics have to be defined. With the given problem, there are simple metrics for both CO\textsubscript{2} levels in the atmosphere and global warming, concentration in parts-per-million and temperature in degrees Celsius, respectively. In terms of time, years are already represented numerically.
 
     Once the system can be represented quantitatively and a quantitative output can be interpreted as a state of the system, a math model can be constructed. There are many different approaches to construct a model from numerical representations of a system, but this paper focuses on ``fitting'' ``generic models'' to true/historical numeric data.
-
 
     \subsection{Function Regression}
 
@@ -262,7 +252,6 @@
 
     \noindent where $g$ is the generic model, and $f$ is a constructed model by finding specific values for each of the parameters $p_i$. $\bm{\beta}$ is simply a vector that encapsulates all of the parameters.
 
-
     \subsection{Error Metrics}
 
     ``Fitting'' a model, also known as ``optimization'', is a systematic approach to find parameters that ``best'' models the given system. Usually, an error function is defined to quantitatively gauge how accurate or good the model is by calculating a metric based on the difference between the actual output and expected output for a given input~\eqref{eq:model_diff}. The optimization process tries to produce the ``best'' model by minimizing the error function across all available data values. For example,~\eqref{eq:model_sqd} is a square-error function that gives the sum of square-errors for all data points.
@@ -275,7 +264,6 @@
         E = \sum_{i=1}^{n} (f(x_i) - \hat y_i)^2
         \label{eq:model_sqd}
     \end{equation}
-
 
     \subsection{Optimization}
 
@@ -323,8 +311,6 @@
         \end{minipage}
     \end{figure}
 
-
-
     \subsection{Linear}
     A linear regression is performed first due to its simplicity and ability to help pick more complex models.
 
@@ -371,7 +357,7 @@
     After calculating the slope of the trend, the intercept $\beta$, is calculated by~\eqref{eq:lr_intc}:
 
     \begin{equation}
-        \beta = \bar y - \beta \bar x
+        \beta = \bar y - \alpha \bar x
         \label{eq:lr_intc}
     \end{equation}
 
@@ -426,8 +412,6 @@
         \end{minipage}
     \end{table}
 
-
-
     \subsection{Exponential}
     The second approach decided upon was exponential regression, which models the non-linear relationship between an independent variable $x$ and dependent variable $y$, where the rate of change of $y$ with respect to $x$ at a given point is proportional to the quantity itself.
     This choice was made based on visual indicators of the data given\textquotesingle s trend, where the line graph exhibited a possible exponential curve.
@@ -438,17 +422,17 @@
         \label{eq:exp}
     \end{equation}
 
-    \noindent where $\alpha$ is the growth factor, or the base (minus one); and $\beta$ is the initial value, or the y-intercept.
+    \noindent where $\alpha$ is the exponential growth factor
 
     However, in order to fit such a model to arbitrary (non-normalized) values, two additional parameters have to be added to allow for displacement translations of the function on both axis. This gives~\eqref{eq:exp2}:
 
     \begin{equation}
-        f(x) = \beta (1 + \alpha)^{x + a} + b
+        f(x) = \beta (\alpha)^{x + a} + b
         \label{eq:exp2}
     \end{equation}
 
     \noindent where $a$ and $b$ allows for offsets in the x and y axis, respectively.
-    One optimization can be made here - the equation can be rearranged to only have 3 parameters yet still be able to fit to any scale and offset of values~\eqref{eq:exp3}:
+    An optimization can be made here - the equation can be rearranged to only have 3 parameters yet still be able to fit to any scale and offset of values~\eqref{eq:exp3}:
 
     \begin{equation}
         f(x) = B^{b (x + a)} + c
@@ -456,23 +440,27 @@
     \end{equation}
 
     \noindent where $B$, the base, can be any positive constant, and the function is parameterized by $a$, $b$, and $c$.
+
+    $a$ and $b$ performs a linear transformation on the input, while $c$ performs a translation on the output.
+    The equation in this form expresses in the relationship in purely in terms of translations.
     This reduction in parameters allows for a higher efficiency when regressing the function to the dataset programmatically.
     In the actual regression, 2 was used for the value of $B$.
 
     Unlike linear regression, trying to fit an exponential function to a data set would theoretically require complex methods such as partial derivatives.
     However, a programmatic approach was taken, and the function was regressed ``blindly'' iteratively using gradient descent from derivative estimates.
     The \verb|curve_fit()| optimizer from the SciPy library for Python can optimize any non-linear function to a data set blindly - without knowing the algebraic denotation of the function.
-    It is able to optimize unknown functions by performing gradient estimates for the values of the parameters:
+    It is able to optimize unknown functions by performing gradient estimates~\eqref{eq:grad} for the values of the parameters using the basic definition of the derivative at a point $x$:
 
     \begin{equation}
-        G = \frac{f(x + \Delta x) - f(x)}{\Delta x}
+        G = \frac{\Delta y}{\Delta x} = \frac{f(x + \Delta x) - f(x)}{\Delta x}
+        \label{eq:grad}
     \end{equation}
 
     \noindent where $G$ is the gradient of function $f$ at point $x$.
-    $\Delta h$ is taken to be a very small value to increase accuracy for sensitive functions.
+    $\Delta x$ is set to a very small value to increase accuracy for sensitive functions.
 
-    Being able to calculate gradients of the error function at any point of the model function, a gradient descent algorithm is used to iteratively minimize the error function.
-    The parameters are adjusted based on their calculated error gradients:
+    After being able to calculate gradients of the error function at any point of the model function, a gradient descent algorithm~(\ref{alg:grad}) can be deployed to iteratively minimize the error function.
+    The parameters are adjusted based the gradients of the error function:
 
     \begin{equation}
         \beta_j \longleftarrow \beta_j - \alpha \frac{E(x, \beta + \Delta \beta_j) - E(x, \beta)}{\Delta \beta_j}
@@ -481,10 +469,25 @@
     \noindent where parameter $\beta_j$ is adjusted based the error function $E$\textquotesingle s gradient - the parameter changes in to the opposite direction of the gradient in order to find the minimum of the error function.
     $\alpha$, the learning rate, is usually a very small value to prevent the parameters from changing too much at once.
 
-    This optimizer was applied to the given data to obtain the optimized model:
+    \begin{algorithm}
+        \caption{Gradient Descent}
+        \label{alg:grad}
+        \begin{algorithmic}
+            \Repeat
+                \State $\epsilon \gets E(f(x, \mathbf{\beta}))$  \Comment{E is the error function}
+                \State $\gamma \gets \frac{\Delta E(f(x, \mathbf{\beta}))}{\Delta \mathbf{\beta}}$  \Comment{calculate current gradient}
+                \State $\mathbf{\beta} \gets \mathbf{\beta} - \alpha \gamma$  \Comment{$\alpha$ is the learning rate}
+            \Until{$\epsilon$ \text{ is sufficiently small}}
+            \State \Return $\mathbf{\beta}$ \text{ as the optimal parameters}
+        \end{algorithmic}
+    \end{algorithm}
+
+
+    The SciPy curve fit optimizer was applied to the given data to obtain the following model:
 
     \begin{equation}
         C_i = 2^{0.023381 (i - 1707.690634)} + 256.024002
+        \label{eq:co2_exp}
     \end{equation}
 
     $y$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2081.
@@ -501,14 +504,14 @@
             \centering
             \begin{tabular}{ll}
                 \toprule
-                Metric               & Value  \\
+                Metric               & Value   \\
                 \midrule
                 MSE                  & 0.48061 \\
                 RMSE                 & 0.69326 \\
                 MAE                  & 0.56981 \\
                 PCC                  & 0.99973 \\
                 R\textsuperscript{2} & 0.99945 \\
-                CVAR                 & 890.45 \\
+                CVAR                 & 890.45  \\
                 \bottomrule
             \end{tabular}
             \caption{Error Metrics for Exponential Regression}
@@ -519,7 +522,6 @@
     Visually, the exponential function better aligns with the actual values; the predicted values also seem to fit with the general trend, and this is confirmed by extremely good error metrics, as show in Table~\ref{tab:co2_exp_err}.
     An advantage of exponential regression as a predictive model is that it provides high quality forecasts, which increase the accuracy of predicted values during interpolation.
     However, a key drawback is that a large data set is necessary to carry this method out, as a reasonable amount of continuity is needed to accurately predict future values, especially during extrapolation.
-
 
     \subsection{Sigmoid}
     The third predictive model selected shares similarities with the exponential model.
@@ -549,14 +551,14 @@
             \centering
             \begin{tabular}{ll}
                 \toprule
-                Metric               & Value  \\
+                Metric               & Value   \\
                 \midrule
                 MSE                  & 0.61002 \\
                 RMSE                 & 0.78104 \\
                 MAE                  & 0.66351 \\
                 PCC                  & 0.99965 \\
                 R\textsuperscript{2} & 0.99930 \\
-                CVAR                 & 889.87 \\
+                CVAR                 & 889.87  \\
                 \bottomrule
             \end{tabular}
             \caption{Error Metrics for Sigmoid Regression}
@@ -569,7 +571,6 @@
     \begin{center}
         \frame{\includegraphics[scale=0.6]{logistic_2400}}
     \end{center}
-
 
     \subsection{Prophet}
     Prophet is a non-linear regression model released by Facebook, it is a procedure for forecasting time series data, working best with series that have strong seasonal effects of historical data. The graph for CO\textsubscript{2} levels over time can be plotted. The regression model is in the form:
@@ -588,13 +589,12 @@
         \frame{\includegraphics[scale=0.5]{prophet}}
     \end{center}
 
-    Prophet is fast and generally maintains a high accuracy when predicting values. It can be used in a range of different contexts and it is robust to outliers, shifts in the overall trend and missing data.  A key disadvantage is that a larger set of data is needed to accurately depict a trend-line.
-
+    Prophet is fast and generally maintains a high accuracy when predicting values. It can be used in a range of different contexts and it is robust to outliers, shifts in the overall trend and missing data. A key disadvantage is that a larger set of data is needed to accurately depict a trend-line.
 
     \subsection{ARIMA}
     An additional time-series prediction model that was investigated was ARIMA, which is based on ARMA (AutoRegressive Moving Average). These models are widely used in datasets that demonstrate non-stationarity, where the series\textquotesingle statistical properties such as mean, variance and autocorrelation change over time. ARIMA assumes the input data to be stationary, so any non-stationary data has to be made stationary through a reversible process. Usually, the transformation involves finding the general trend with methods such as regression and then using differencing to remove the trend from the dataset. With the trend eliminated, an ARIMA model can then be constructed and its optimal parameters found.
 
-    Another appropriate model to use in regards to  the data set is ARIMA. ARIMA models are generally denoted as ARIMA (p, d, q) where:
+    Another appropriate model to use in regards to the data set is ARIMA. ARIMA models are generally denoted as ARIMA (p, d, q) where:
     \begin{itemize}
         \item p = Number of Auto-Regressive (AR) terms
         \item d = Number of differencing
@@ -625,7 +625,7 @@
 
     The p-value obtained is greater than the significance level 0.05 and the ADF statistic is higher than any of the critical values, hence it can be concluded that the time series has a unit root and is non-stationary. The high p-value signifies that a high order of differencing will need to be used.
 
-    To further confirm the data\textquotesingle s stationarity, autocorrelation and partial autocorrelation graphs were also used. AFC and PAFC functions are measures of correlation between past and present data, and indicate which past data values are most useful in predicting future ones.  The results of these functions are then used to select the most optimal parameters for p and q. Both functions were applied on the given dataset and the graphed results displayed below:
+    To further confirm the data\textquotesingle s stationarity, autocorrelation and partial autocorrelation graphs were also used. AFC and PAFC functions are measures of correlation between past and present data, and indicate which past data values are most useful in predicting future ones. The results of these functions are then used to select the most optimal parameters for p and q. Both functions were applied on the given dataset and the graphed results displayed below:
 
     \begin{center}
         \frame{\includegraphics[scale=0.5]{pacf_acf}}
@@ -641,7 +641,6 @@
     The autocorrelation trend as well as the high order of differencing required to transform the data to stationary (as seen in the ADF test) both demonstrate that the given dataset is unsuitable for constructing an ARIMA model, and therefore this prediction model has been rejected and will not be used as part of the predicted CO\textsubscript{2} and temperature values.
 
 
-
     \section{CO\textsubscript{2} - Model Evaluation}
     To rank the 4 accepted predictive models on their mathematical accuracy, the following error metrics are to be calculated for each model and then compared with each other:
 
@@ -652,7 +651,7 @@
 
     75\% of known data values are allocated to the testing data group, remaining 25\% are allocated to the training group. The predictive model will take in the training group data values as its sole input, and will predict the remaining 25\%. The model\textquotesingle s predicted values are then to be compared with the training group\textquotesingle s values and the forecast errors obtained.
     A forecast error is defined as the difference between an observed and its forecasted value; the formula for a single forecast error can be modified to suit multiple data values, and it is denoted by the following equation:
-q1
+    q1
     ${e_{T+h} = y_{T+h} - \hat{y}_{T+h|T}}$
 
     Where:
@@ -667,7 +666,6 @@ q1
 
     It is important to note that although a model may fit the training data well, it does not necessarily mean the model will forecast well, therefore it is important to take the other error metrics into consideration.
 
-
     \subsection{Accuracy Analysis}
 
     \subsubsection{MSE}
@@ -681,7 +679,7 @@ q1
         \item ${\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$ = Squares of the errors
     \end{itemize}
 
-     MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE\@.
+    MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE\@.
 
     \subsubsection{RMSE}
     Root Mean Squared Error (RMSE) is the square root of the MSE, measuring the standard deviation of the residuals. The higher the RMSE value, the larger the deviation between actual and predicted values. By proxy, the lower the RMSE value, the lower the deviation, hence the model is more accurate. Building on the last error metric formula, RMSE can be denoted as:
@@ -710,10 +708,8 @@ q1
     ---------------A TABLE, AGAIN.-------------------
     --------------LO AND BEHOLD, ANOTHER TABLE--------------
 
-
     \subsection{Sensitivity Analysis}
     blah blah
-
 
     \subsection{Overall Evaluation}
 
@@ -723,12 +719,10 @@ q1
 
     \noindent\textbf{Weakness 1}: asdf
 
-
     \subsection{Possible Improvements}
     blah blah
 
     \newpage
-
 
 
     \section{CO\textsubscript{2} - Results \& Conclusions}
@@ -736,10 +730,8 @@ q1
     \subsection{Forecast Results}
     we\textquotesingle re doomed
 
-
     \subsection{Comparison with External Claims}
     they\textquotesingle re all wrong
-
 
 
     \section{Temperature - Modelling}
@@ -747,10 +739,8 @@ q1
     \subsection{Time Series}
     Temperature over time.
 
-
     \subsection{Relationship with CO\textsubscript{2}}
     100\% causation
-
 
 
     \section{Temperature - Model Evaluation}
@@ -759,12 +749,10 @@ q1
     our model definitely retains its accuracy 1000 years into the future.
 
 
-
     \section{Temperature - Results \& Conclusions}
 
     \subsection{Forecast Results}
     time to get baked.
-
 
 
     \section{References}
@@ -781,7 +769,6 @@ q1
         # pass
 
     \end{lstlisting}
-
 
     \subsection{Bibliography}
 %    \printbibliography
