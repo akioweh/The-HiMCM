@@ -18,8 +18,11 @@
 \usepackage{babel}
 \usepackage{textcomp}
 \usepackage{changepage}
+\usepackage{enumitem}
 \usepackage{siunitx}
 \usepackage{lstmisc}
+\usepackage{xcolor}
+\usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{blindtext}
 \usepackage{capt-of}
@@ -32,6 +35,8 @@
 \renewcommand*\familydefault{\sfdefault}
 
 \renewcommand*\familydefault{\sfdefault}
+
+\newcommand{\size}[2]{{\fontsize{#1}{0}\selectfont#2}}
 
 
 %\addbibresource{citations.bib}
@@ -174,7 +179,7 @@
 
     \noindent\textbf{Relative Temperature}: Global average temperature, relative to the baseline average temperature from 1951 to 1980, in degrees Celsius.
 
-    \noindent\textbf{Error Metric Abbreviations}: See Table~\ref{tab:err_abb}.
+    \noindent\textbf{Error and Relationship Metric Abbreviations}: See Table~\ref{tab:err_abb}.
 
     \begin{table}[H]
         \centering
@@ -341,7 +346,7 @@
     A linear growth function takes the general form of~\eqref{eq:lr}:
 %
     \begin{equation}
-        f(x) = \alpha x = \beta
+        f(x) = \alpha x + \beta
         \label{eq:lr}
     \end{equation}
 %
@@ -361,7 +366,7 @@
     Because the predicted values $\hat{y}$ for a linear model is modelled as $\alpha x + \beta$, the Square-Error function for a linear model can be more specific~\eqref{eq:ls_lr}:
 
     \begin{equation}
-        E = \sum{(y - (\alpha x - \beta))^2}
+        E = \sum{(y - (\alpha x + \beta))^2}
         \label{eq:ls_lr}
     \end{equation}
 
@@ -383,7 +388,7 @@
         \label{eq:lr_intc}
     \end{equation}
 
-    OSL was applied to the given data set to obtain the coefficient $\alpha$ and the y-intercept $\beta$ - $1.6140361$ and $2854.59326421$, respectively - which corresponds to the following linear equation:
+    OLS was applied to the given data set to obtain the coefficient $\alpha$ and the y-intercept $\beta$ - $1.6140361$ and $-2854.59326421$, respectively - which corresponds to the following linear equation:
 %
     \begin{equation}
         C_i = 1.6140361 i - 2854.59326421
@@ -622,9 +627,21 @@
 
     As can be seen, the logistic curve follows a very similar path to that of the exponential function. However, the 1959--2050 year range is too small to depict the sigmoid point, so the functions were graphed to reach the year 2400:
 
-    \begin{center}
-        \frame{\includegraphics[scale=0.6]{logistic_2400}}
-    \end{center}
+    \begin{figure}[h]
+        \begin{minipage}{0.5\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{logistic_2400}%
+            \captionof{figure}{Blown up Logistic Regression}
+            \label{fig:co2_logi_2400}
+        \end{minipage}%
+        \begin{minipage}{0.5\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{co2_sigm_all}%
+            \caption{Sigmoid Functions with Different Limits}
+            \label{fig:co2_sigm_all}
+        \end{minipage}
+    \end{figure}
+
 
     \subsection{Prophet}
     Prophet is a non-linear regression model released by Facebook, it is a procedure for forecasting time series data, working best with series that have strong seasonal effects of historical data. The graph for CO\textsubscript{2} levels over time can be plotted. The regression model is in the form:
@@ -646,18 +663,38 @@
     Prophet is fast and generally maintains a high accuracy when predicting values. It can be used in a range of different contexts and it is robust to outliers, shifts in the overall trend and missing data. A key disadvantage is that a larger set of data is needed to accurately depict a trend-line.
 
     \subsection{ARIMA}
-    An additional time-series prediction model that was investigated was ARIMA, which is based on ARMA (AutoRegressive Moving Average). These models are widely used in datasets that demonstrate non-stationarity, where the series\textquotesingle statistical properties such as mean, variance and autocorrelation change over time. ARIMA assumes the input data to be stationary, so any non-stationary data has to be made stationary through a reversible process. Usually, the transformation involves finding the general trend with methods such as regression and then using differencing to remove the trend from the dataset. With the trend eliminated, an ARIMA model can then be constructed and its optimal parameters found.
+    An additional time-series prediction model that was investigated was ARIMA, which is based on ARMA (AutoRegressive Moving Average). These models are widely used in datasets that demonstrate non-stationarity, where the series\textquotesingle statistical properties such as mean, variance and autocorrelation change over time. ARMA assumes the input data to be stationary, so any non-stationary data has to be made stationary through a reversible process. Usually, the transformation involves finding the general trend with methods such as regression and then using differencing to remove the trend from the dataset. With the trend eliminated, an ARMA model can then be constructed and its optimal parameters found.
 
     Another appropriate model to use in regards to the data set is ARIMA. ARIMA models are generally denoted as ARIMA (p, d, q) where:
-    \begin{itemize}
+    \begin{itemize}[nosep]
         \item p = Number of Auto-Regressive (AR) terms
         \item d = Number of differencing
         \item q = Number of Moving Average (MA) terms
     \end{itemize}
 
     The functions AR(p) and MA(q) are defined below as:
+    AR(p):
 
-    -----------THERES SUPPOSED TO BE A TABLE HERE----------
+    \begin{tabular}{|*2{p{.45\textwidth}|}}
+        \hline
+        AR(p):                       & MA(q):                   \\
+        \quad ${\phi (B) X_t = w_t}$ & ${X_t = \theta (B) w_t}$ \\[\baselineskip]
+        Where
+        \begin{itemize}[nosep]
+            \item ${\phi (B)}$ = Autoregressive operator
+            \item ${X_t}$ = Inverse operator
+            \item ${w_t}$ = White noise
+        \end{itemize}
+        &
+        Where
+        \begin{itemize}[nosep]
+            \item ${\theta (B)}$ = Moving average operator
+            \item ${X_t}$ = Inverse operator
+            \item ${w_t}$ = White noise
+        \end{itemize}
+        \\
+        \hline
+    \end{tabular}
 
     Before tuning the parameters p and q, the number of differencing required to make the data stationary must be found out. To evaluate whether the current dataset is stationary, an Augmented Dickey-Fuller (ADF) test was performed.
 
@@ -666,7 +703,7 @@
     ${\Delta y_{t}=\alpha +\beta t+\gamma y_{t-1}+\delta _{1}\Delta y_{t-1}+\cdots +\delta _{p-1}\Delta y_{t-p+1}+\varepsilon _{t}}$
 
     Where:
-    \begin{itemize}
+    \begin{itemize}[nosep]
         \item ${y_{t}}$ = Value of the time series at time t
         \item ${\alpha}$ = constant
         \item ${\beta}$ = Coefficient on a time trend
@@ -675,7 +712,19 @@
 
     The results of the ADF test applied on the given dataset is presented below:
 
-    -------THERES SUPPOSED TO BE ANOTHER TABLE HERE---------
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|}
+            \hline
+            \textbf{ADF Test Statistic}  & 5.506786113910213 & \textbf{Significance Level} & \textbf{Critical Value} \\
+            \hline
+            \textbf{P-Value}             & 1.0               & \textbf{1\%}                & -3.5463945337644063     \\
+            \hline
+            \textbf{No. of Lags Used}    & 2                 & \textbf{5\%}                & -2.911939409384601      \\
+            \hline
+            \textbf{No. of Observations} & 59                & \textbf{10\%}               & -2.5936515282964665     \\
+            \hline
+        \end{tabular}
+    \end{center}
 
     The p-value obtained is greater than the significance level 0.05 and the ADF statistic is higher than any of the critical values, hence it can be concluded that the time series has a unit root and is non-stationary. The high p-value signifies that a high order of differencing will need to be used.
 
@@ -687,7 +736,7 @@
 
     For both graphs the x-axis represents lag, whereas the y-axis indicates the correlation strength. ACF graphs represent the correlation between data values that are n intervals apart. PACF graphs are similar in that they represent the same information, however they also account for the values of the intervals in between.
 
-    The correlation that can be seen in the AFC graph is negative, indicating that large current values correspond with small values at the specified lag. The absolute correlation values represent the strength of the relationship; to construct an ARIMA model, the expected trend of these values should be random. In this case, the initial relationship between past and present values is strong, but gradually decreases over lags, indicating a clear trend of decreasing correlation strength.
+    The correlation that can be seen in the ACF graph is negative, indicating that large current values correspond with small values at the specified lag. The absolute correlation values represent the strength of the relationship; to construct an ARIMA model, the expected trend of these values should be random. In this case, the initial relationship between past and present values is strong, but gradually decreases over lags, indicating a clear trend of decreasing correlation strength.
 
     If the autocorrelation follows a random non-linear trend, then AR(p) and MA(q) can be applied to the graphed functions to obtain the optimal parameter values for p and q.
     However, this is only assuming the data does not have a trend or seasonality component, which does not apply to the given dataset.
@@ -695,30 +744,61 @@
     The autocorrelation trend as well as the high order of differencing required to transform the data to stationary (as seen in the ADF test) both demonstrate that the given dataset is unsuitable for constructing an ARIMA model, and therefore this prediction model has been rejected and will not be used as part of the predicted CO\textsubscript{2} and temperature values.
 
 
+
     \section{CO\textsubscript{2} - Model Evaluation}
     To rank the 4 accepted predictive models on their mathematical accuracy, the following error metrics are to be calculated for each model and then compared with each other:
 
-    --------------ANOTHER TABLE---------------------------
+    \begin{tabular}{|*2{p{.5\textwidth}|}}
+        \hline
+        \textbf{Scale-dependent Errors} & \textbf{Forecast Errors} \\
+        \hline
+        \begin{itemize}[nosep]
+            \item MSE (Mean Squared Error)
+            \item RMSE (Root Mean Squared Error)
+            \item MAE (Mean Absolute Error)
+            \item PMCC (Product Moment Correlation Coefficient)
+            \item ${R^2}$ (Coefficient of Determination)
+            \item Covariance
+        \end{itemize}
+        &
+        \begin{itemize}[nosep]
+            \item Seperation of known values into testing and training data
+        \end{itemize}
+        \\
+        \hline
+    \end{tabular}
 
     \subsection{Procedure}
     \noindent \textbf{Separation of Known Values into Testing and Training data}
 
     75\% of known data values are allocated to the testing data group, remaining 25\% are allocated to the training group. The predictive model will take in the training group data values as its sole input, and will predict the remaining 25\%. The model\textquotesingle s predicted values are then to be compared with the training group\textquotesingle s values and the forecast errors obtained.
     A forecast error is defined as the difference between an observed and its forecasted value; the formula for a single forecast error can be modified to suit multiple data values, and it is denoted by the following equation:
-    q1
+
     ${e_{T+h} = y_{T+h} - \hat{y}_{T+h|T}}$
 
     Where:
-    \begin{itemize}
+    \begin{itemize}[nosep]
         \item ${e_{T+h}}$ = Forecast error
         \item ${y_{T+h}}$ = Actual value of the h-step observation
         \item ${\hat{y}_{T+h|T}}$ = Actual value of the h-step forecast
     \end{itemize}
 
+    The equation was again modified to find the sum of all the forecast errors, this was then applied to each model to construct the table below:
 
-    [ADD GRAPHED RESULTS HERE + CALCULATED FORECAST ERRORS]
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|c|}
+            \hline
+            & \textbf{Linear} & \textbf{Exponential} & \textbf{Logistic} & \textbf{Prophet} \\
+            \hline
+            \textbf{Absolute sum of forecast errors} & 173.66          & 190.2                & 97.07             & 40.49            \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    NOTE - ADD THE 4 TESTING GRAPHS HERE
 
     It is important to note that although a model may fit the training data well, it does not necessarily mean the model will forecast well, therefore it is important to take the other error metrics into consideration.
+
 
     \subsection{Accuracy Analysis}
 
@@ -750,7 +830,7 @@
     Where:
     \begin{itemize}
         \item ${\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}$ = Sum of absolute error
-        \item {n} = Number of errors
+        \item {n} = Number of data points
     \end{itemize}
 
     \subsubsection*{PMCC, ${R^2}$ AND COVARIANCE}
@@ -759,8 +839,40 @@
     \subsubsection*{Results}
     The MSE, RMSE, MAE, PMCC, R\textsuperscript{2} and covariance were calculated for each accepted model, rounded to 5 s.f, and compiled into a results table below. For each error metric, the model with the value closest to and furthest from a perfect value were highlighted:
 
-    ---------------A TABLE, AGAIN.-------------------
-    --------------LO AND BEHOLD, ANOTHER TABLE--------------
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|c|}
+            \hline
+            & \textbf{Linear} & \textbf{Exponential} & \textbf{Logistic} & \textbf{Prophet} \\
+            \hline
+            \textbf{MSE}        & 15.376          & 0.47977              & 0.47977           & 0.10310          \\ \hline
+            \textbf{RMSE}       & 3.9212          & 0.69266              & 0.69266           & 0.32109          \\ \hline
+            \textbf{MAE}        & 3.1920          & 0.56081              & 0.57286           & 0.25507          \\ \hline
+            \textbf{PMCC}       & 0.99119         & 0.99973              & 0.99973           & 0.99994          \\ \hline
+            \textbf{${R^2}$}    & 0.98246         & 0.99945              & 0.99945           & 0.99990          \\ \hline
+            \textbf{Covariance} & 875.32          & 890.45               & 890.45            & 890.82           \\ \hline
+        \end{tabular}
+    \end{center}
+
+    For each model, the year at which 685ppm was reached and the range from 2050 was found to construct the following table:
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|c|}
+            \hline
+            \textbf{Year (at which 685ppm is reached)} & 2193 & 2097 & 2085 & 2134 \\
+            \hline
+            \textbf{Range (from 2050)}                 & 143  & 29   & 35   & 84   \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    The graphed training results demonstrate that the Prophet model has the least amount of forecasting errors, and all the error metrics were closest to those of a perfect prediction. However, the error metrics may not give a perfectly clear indication as to which of the models is most accurate, as the difference between prophet and the exponential and logistic error metrics is negligible. Additionally, the year at which 685ppm was reached by the exponential model was closest to the predicted year by OECD.
+
+    Overall, even if by a small margin, as the Prophet model better fulfills the above criteria, it is deemed to be the most accurate out of the accepted models chosen and tested. This decision is reinforced by the model’s use in major companies; additional studies have also demonstrated Prophet’s high accuracy in predictions. A major disadvantage to the model however is its speed, as the run time to process a single item is ~60ms. In this situation, this disadvantage can be overlooked, as the data set was small enough so as not to cause time issues.
+
+
+    \subsection{Sensitivity Analysis}
+    blah blah
+
 
     \subsection{Overall Evaluation}
 
@@ -770,10 +882,10 @@
 
     \noindent\textbf{Weakness 1}: asdf
 
+
     \subsection{Possible Improvements}
     blah blah
 
-    \newpage
 
 
     \section{CO\textsubscript{2} - Results \& Conclusions}
@@ -781,8 +893,78 @@
     \subsection{Forecast Results}
     we\textquotesingle re doomed
 
+
     \subsection{Comparison with External Claims}
     they\textquotesingle re all wrong
+
+
+    \subsubsection*{NOAA: 2004 observed largest increase yet}
+
+    Quoted from the problem statement: the ``March 2004 increase of CO\textsubscript{2} resulted in a larger increase than observed over any previous 10-year period''.
+
+    Before attempting to verify this claim, ambiguities in the meaning of a ``larger increase than observed over any previous 10-year period'' must be clearly defined.
+    This statement contains two parts: ``larger increase than [previously] observed'' and ``any previous 10 year period''.
+    How a comparative change metric for any 10-year period is left to interpretation.
+    In the end, two reasonable quantitative approaches were adopted, both of which perform calculations on pre-2004 data, 10 consecutive years at a time, to generate a metric that encapsulates the change of CO\textsubscript{2} levels for that decade.
+
+
+    \noindent\size{12}{\textbf{Comparing to decadal changes}}
+
+    In this approach, a simple method was used to calculate the net percentage change between any two years for CO\textsubscript{2} levels. The following equation was used,
+%
+    \begin{equation}
+        \displaystyle \% \triangle CO_2 = \frac{C_f - C_i}{C_i} \times 100
+    \end{equation}
+%
+    where
+    $C_f$ is the CO\textsubscript{2} level in the final year of the decade and
+    $C_i$ is the CO\textsubscript{2} level in the initial year of the decade.
+
+    This computation was carried out using a moving ten-year interval window, yielding a comparable measure of change for every preceding decade.
+
+    As indicated in Figure~\ref{fig:1a_1}, the net percentage increase in atmospheric CO\textsubscript{2} levels over the ten-year period 1994--2004 (4.63\%), while significant, was lower than that of the period1993--20033 (4.74\%). With regard to the available data, the March 2004 increase was therefore only the second-highest recorded over any previous 10-year period.
+
+    \noindent\size{12}{\textbf{Comparing to moving averages}}
+
+    In addition to direct inter-decade comparisons, an analysis of change relative to the average values for each ten-year period was undertaken using the following methodology.
+
+    Using a moving ten-year window, the annual data was divided into 54 overlapping intervals.
+    For each interval, the arithmetic average of the annual CO\textsubscript{2} levels was calculated.
+    To create a ratio-based indicator, $\propto$, for the extent of change, the following step was further applied:
+%
+    \begin{equation}
+        \propto = \frac{C_f}{\mu}
+    \end{equation}
+%
+    where
+    $C_f$ is CO\textsubscript{2} level in the decade end year
+    $\mu$ is ten-year arithmetic average CO\textsubscript{2} level.
+    The indicator thus provides a convenient and comparable measure for the increase in CO\textsubscript{2} levels at the end of each decade, relative to the ten-year average. A comparison of the-values calculated over the available data yielded the following result, represented visually in Figure 1.2, below.
+
+
+    Relative to previous years, the value of $\alpha$ for the decade ending in 2004 (1.0233) was the second-highest calculated, exceeded by that of 2003 (1.0238). This implies that the intra-decade increase for March 2004, in comparison to previous decades, was not the highest.
+
+    A similar procedure was implemented to determine the relative annual increases, using the following formula to calculate a ratio $\beta$:
+%
+    \begin{equation}
+        \beta = \frac{I_f}{\mu_i}
+    \end{equation}
+%
+    where $I_f$ is the final increase, from the second-last to the last year in a given ten-year period; and
+    $\mu_i$ is the arithmetic average yearly increase over the ten-year period.
+
+    This yielded a corroborating result, with the $\beta$-value for the decade ending in 2004 (1.217) lower than that of 14 other preceding decade groups.
+
+    Therefore, the intra-decade change for 1994--2004 is significantly smaller than that of multiple preceding decades.
+
+
+
+    In summary, both approaches yielded an identical conclusion; while the March 2004 increase of CO\textsubscript{2} was among the largest observed until that date, it was not the single largest. In terms of net change and increase from the decadal mean, it was exceeded by the change as of March 2003. Furthermore, its final increase relative to the average annual increase within the ten-year period was significantly smaller than several preceding decade intervals.
+
+
+
+
+    \subsubsection*{OECD: reaching 685ppm by 2050}
 
 
     \section{Temperature - Modelling}
@@ -790,8 +972,10 @@
     \subsection{Time Series}
     Temperature over time.
 
+
     \subsection{Relationship with CO\textsubscript{2}}
     100\% causation
+
 
 
     \section{Temperature - Model Evaluation}
@@ -800,10 +984,12 @@
     our model definitely retains its accuracy 1000 years into the future.
 
 
+
     \section{Temperature - Results \& Conclusions}
 
     \subsection{Forecast Results}
     time to get baked.
+
 
 
     \section{References}
@@ -820,6 +1006,7 @@
         # pass
 
     \end{lstlisting}
+
 
     \subsection{Bibliography}
 %    \printbibliography
