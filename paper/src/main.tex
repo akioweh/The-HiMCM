@@ -33,10 +33,18 @@
 
 %! suppress = LineBreak
 \begin{document}
+    \graphicspath{ {./figs/} }
+
+    \setlength{\abovedisplayskip}{3pt}
+    \setlength{\belowdisplayskip}{3pt}
+    \setlength{\abovedisplayshortskip}{-12pt}
+    \setlength{\belowdisplayshortskip}{0pt}
+
+    \setlength{\abovecaptionskip}{0pt}
+
     \title{Quantitatively Modelling CO\textsubscript{2} and Global Warming}
 
 
-    \graphicspath{ {./figs/} }
     \begin{abstract}
         Abstract
 
@@ -72,7 +80,8 @@
 
     \begin{adjustwidth}{1cm}{}
 
-        \noindent Modelling. \\
+        \noindent Modelling.
+
         \vspace{-6pt}
         \noindent Prodice models that reflect existing CO\textsubscript{2} data and extrapolates to reasonable predictions.
 
@@ -107,7 +116,7 @@
         \noindent Draw Conclusions.
 
         \vspace{-6pt}
-        Real-world implications based on predictions and results.
+        \noindent Real-world implications based on predictions and results.
 
     \end{adjustwidth}
 
@@ -119,7 +128,7 @@
         \noindent Modelling.
 
         \vspace{-6pt}
-        \noindent Prodice models that reflect existing temperature data and extrapolates to reasonable predictions.
+        \noindent Produce models that reflect existing temperature data and extrapolates to reasonable predictions.
 
         \begin{adjustwidth}{1cm}{}
             \noindent Direct relationship between CO\textsubscript{2} and temperature.
@@ -168,6 +177,7 @@
             CVAR                 & Covariance                                   \\
             \bottomrule
         \end{tabular}
+        \vspace{8pt}
         \caption{Abbreviations of Error Metrics}
         \label{tab:err_abb}
     \end{table}
@@ -198,6 +208,7 @@
             $T^{-1}_i$ & Year where (predicted) Temperature is at $i$               \\
             \bottomrule
         \end{tabular}
+        \vspace{8pt}
         \caption{General Variables}
         \label{tab:my_label}
     \end{table}
@@ -209,18 +220,18 @@
     \subsection{Modelling, Conceptually}
 
     ``A mathematical model is a description of a \textit{system} using mathematical concepts and language.'' (wikipedia reference) A completed math model should describe/simulate it\textquotesingle s target system to the best of its ability. All models behave like a (complex) function~\eqref{eq:model_func} - it produces outputs when given inputs. For this problem, the \textit{system}s to be modelled are atmospheric CO\textsubscript{2} and global warming.
-
+%
     \begin{equation}
         y = f(x)
         \label{eq:model_func}
     \end{equation}
-
+%
     \noindent where $y$ is the output, $x$ is the input, and $f$ is the model itself.
 
     \subsection{Time Series}
 
     Inputs and outputs differ depending on the type of the model, but one type relevant to this paper is are time-series\textquotesingle . In a time-series model, the input is a timeframe, and the output describes the state of a system it is modelling; conceptually, a time-series models the evolution of a possibly boundless dynamic system over time~\eqref{eq:model_ts}. This will be useful later to, for example, model the change of CO\textsubscript{2} levels over time. Time-series\textquotesingle~belong to the family of relationship models, which produces outputs based on an input variable, effectively translation values between two variables. This will be useful later to model the relationship between CO\textsubscript{2} levels and temperature change.
-
+%
     \begin{equation}
         \begin{aligned}
             t & \rightarrow y \\
@@ -228,7 +239,7 @@
         \end{aligned}
         \label{eq:model_ts}
     \end{equation}
-
+%
     \noindent where $y$ is the output, $t$ is the time or input, and $y_0$ is the initial state (when modelling relative evolution over time).
 
     \subsection{Quantitative Data}
@@ -240,7 +251,7 @@
     \subsection{Function Regression}
 
     In short, a ``generic model'' is a mathematical function parameterized by a variable amount of constants within its definition~\eqref{eq:model_g}. The function exhibits specific characteristics regardless of the values of its parameters. The end goal of modelling is to adjust these parameters such that the function can produce the most accurate output (compared to the real system) for each given input. In the case of modelling CO\textsubscript{2} levels as a time-series, the model function should produce ppm values for a given year.
-
+%
     \begin{equation}
         \begin{aligned}
             \bm{\beta} &= [p_1, p_2, p_3, p_4, \dots] \\
@@ -249,19 +260,20 @@
         \end{aligned}
         \label{eq:model_g}
     \end{equation}
-
+%
     \noindent where $g$ is the generic model, and $f$ is a constructed model by finding specific values for each of the parameters $p_i$. $\bm{\beta}$ is simply a vector that encapsulates all of the parameters.
 
     \subsection{Error Metrics}
 
     ``Fitting'' a model, also known as ``optimization'', is a systematic approach to find parameters that ``best'' models the given system. Usually, an error function is defined to quantitatively gauge how accurate or good the model is by calculating a metric based on the difference between the actual output and expected output for a given input~\eqref{eq:model_diff}. The optimization process tries to produce the ``best'' model by minimizing the error function across all available data values. For example,~\eqref{eq:model_sqd} is a square-error function that gives the sum of square-errors for all data points.
-
+%
     \begin{equation}
         E(y) \approx y - \hat y
         \label{eq:model_diff}
     \end{equation}
+
     \begin{equation}
-        E = \sum_{i=1}^{n} (f(x_i) - \hat y_i)^2
+        E_{sum} = \sum_{i=1}^{n} (f(x_i) - \hat y_i)^2
         \label{eq:model_sqd}
     \end{equation}
 
@@ -270,19 +282,16 @@
     The optimization process aims to minimize the (sum of the) error function.
     A generic approach is to take partial derivatives of the summed error with respect to every parameter in the model. This allows the minimum to be calculated by equating the differential functions to 0.
     Generally, the partial derivative of error $E$ with respect to parameter $\beta_j$ is:
-
+%
     \begin{equation}
         \begin{aligned}
             \frac{\partial E}{\partial \beta_j} &= 2 \sum_i e_i \frac{\partial e_i}{\partial \beta_j} \\
             \frac{\partial E}{\partial \beta_j} &= -2\sum_i e_i\frac{\partial f(x_i,\boldsymbol \beta)}{\partial \beta_j}
         \end{aligned}
     \end{equation}
-
-    \noindent where $e$ is the error, and $j = 1, \ldots, m$ for $m$ parameters in $\beta$
-
-%    \begin{equation}
 %
-%    \end{equation}
+    \noindent where $e$ is the error, and $j = 1, \ldots, m$ for $m$ parameters in $\beta$.
+
 
 
     \section{CO\textsubscript{2} - Modelling}
@@ -299,13 +308,13 @@
         \centering
         \begin{minipage}{.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth]{co2}
+            \includegraphics[width=\textwidth]{co2}%
             \caption{Graph of given CO\textsubscript{2} data}
             \label{fig:co2}
         \end{minipage}%
         \begin{minipage}{.5\textwidth}
             \centering
-            \includegraphics[width=\textwidth]{co2_acf}
+            \includegraphics[width=\textwidth]{co2_acf}%
             \caption{CO\textsubscript{2} Auto-correlation}
             \label{fig:co2_acf}
         \end{minipage}
@@ -317,12 +326,12 @@
     Linear regression is an approach used to model a linear relationship between an independent variable $x$ and a dependent variable $y$ by finding the slope of the trend and initial value ($y$ when $x$ is 0).
     It is used to represent existing data and predict future values; linear models are used both for interpolation and extrapolation. In this case, the model will be fit to existing data and used to predict future CO\textsubscript{2} levels.
     A linear growth function takes the general form of~\eqref{eq:lr}:
-
+%
     \begin{equation}
         f(x) = \alpha x = \beta
         \label{eq:lr}
     \end{equation}
-
+%
     \noindent where $\alpha$ is the coefficient, or growth rate; and $\beta$ is the y-intercept, or initial value.
     The values of $\alpha$ and $\beta$ are ``optimized'' using an algorithm to model a given dataset with the minimum ``error''.
 
@@ -355,19 +364,19 @@
     \noindent where $n$ is the number of data points.
 
     After calculating the slope of the trend, the intercept $\beta$, is calculated by~\eqref{eq:lr_intc}:
-
+%
     \begin{equation}
         \beta = \bar y - \alpha \bar x
         \label{eq:lr_intc}
     \end{equation}
 
     OSL was applied to the given data set to obtain the coefficient $\alpha$ and the y-intercept $\beta$ - $1.6140361$ and $2854.59326421$, respectively - which corresponds to the following linear equation:
-
+%
     \begin{equation}
         C_i = 1.6140361 i - 2854.59326421
         \label{eq:co2_lr}
     \end{equation}
-
+%
     \noindent where $i$ is the year.
 
     The inverse of the function is derived by solving for $i$ in terms of $C$:
@@ -407,6 +416,7 @@
                 CVAR                 & 875.32 \\
                 \bottomrule
             \end{tabular}
+            \vspace{8pt}
             \caption{Error Metrics for Linear Regression}
             \label{tab:co2_lr_err}
         \end{minipage}
@@ -416,29 +426,30 @@
     The second approach decided upon was exponential regression, which models the non-linear relationship between an independent variable $x$ and dependent variable $y$, where the rate of change of $y$ with respect to $x$ at a given point is proportional to the quantity itself.
     This choice was made based on visual indicators of the data given\textquotesingle s trend, where the line graph exhibited a possible exponential curve.
     Exponential growth functions take the general form of~\eqref{eq:exp}:
-
+%
     \begin{equation}
         f(x) = \alpha^x
         \label{eq:exp}
     \end{equation}
+%
+    \noindent where $\alpha$ is the exponential growth factor.
 
-    \noindent where $\alpha$ is the exponential growth factor
-
-    However, in order to fit such a model to arbitrary (non-normalized) values, two additional parameters have to be added to allow for displacement translations of the function on both axis. This gives~\eqref{eq:exp2}:
-
+    However, in order to fit such a model to arbitrary (non-normalized) values, two additional parameters have to be added to allow for displacement translations of the function on both axis. This gives:
+%
     \begin{equation}
         f(x) = \beta (\alpha)^{x + a} + b
         \label{eq:exp2}
     \end{equation}
-
+%
     \noindent where $a$ and $b$ allows for offsets in the x and y axis, respectively.
-    An optimization can be made here - the equation can be rearranged to only have 3 parameters yet still be able to fit to any scale and offset of values~\eqref{eq:exp3}:
 
+    An optimization can be made here - the equation can be rearranged to only have 3 parameters yet still be able to fit to any scale and offset of values:
+%
     \begin{equation}
         f(x) = B^{b (x + a)} + c
         \label{eq:exp3}
     \end{equation}
-
+%
     \noindent where $B$, the base, can be any positive constant, and the function is parameterized by $a$, $b$, and $c$.
 
     $a$ and $b$ performs a linear transformation on the input, while $c$ performs a translation on the output.
@@ -450,22 +461,22 @@
     However, a programmatic approach was taken, and the function was regressed ``blindly'' iteratively using gradient descent from derivative estimates.
     The \verb|curve_fit()| optimizer from the SciPy library for Python can optimize any non-linear function to a data set blindly - without knowing the algebraic denotation of the function.
     It is able to optimize unknown functions by performing gradient estimates~\eqref{eq:grad} for the values of the parameters using the basic definition of the derivative at a point $x$:
-
+%
     \begin{equation}
         G = \frac{\Delta y}{\Delta x} = \frac{f(x + \Delta x) - f(x)}{\Delta x}
         \label{eq:grad}
     \end{equation}
-
+%
     \noindent where $G$ is the gradient of function $f$ at point $x$.
     $\Delta x$ is set to a very small value to increase accuracy for sensitive functions.
 
     After being able to calculate gradients of the error function at any point of the model function, a gradient descent algorithm~(\ref{alg:grad}) can be deployed to iteratively minimize the error function.
     The parameters are adjusted based the gradients of the error function:
-
+%
     \begin{equation}
         \beta_j \longleftarrow \beta_j - \alpha \frac{E(x, \beta + \Delta \beta_j) - E(x, \beta)}{\Delta \beta_j}
     \end{equation}
-
+%
     \noindent where parameter $\beta_j$ is adjusted based the error function $E$\textquotesingle s gradient - the parameter changes in to the opposite direction of the gradient in order to find the minimum of the error function.
     $\alpha$, the learning rate, is usually a very small value to prevent the parameters from changing too much at once.
 
@@ -484,13 +495,13 @@
 
 
     The SciPy curve fit optimizer was applied to the given data to obtain the following model:
-
+%
     \begin{equation}
         C_i = 2^{0.023381 (i - 1707.690634)} + 256.024002
         \label{eq:co2_exp}
     \end{equation}
-
-    $y$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2081.
+%
+    and $y$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2081.
     The exponential model was graphed alongside the actual values and the linear model for comparison in Figure~\ref{fig:co2_exp}.
 
     \begin{table}[h]
@@ -514,6 +525,7 @@
                 CVAR                 & 890.45  \\
                 \bottomrule
             \end{tabular}
+            \vspace{8pt}
             \caption{Error Metrics for Exponential Regression}
             \label{tab:co2_exp_err}
         \end{minipage}
@@ -561,6 +573,7 @@
                 CVAR                 & 889.87  \\
                 \bottomrule
             \end{tabular}
+            \vspace{8pt}
             \caption{Error Metrics for Sigmoid Regression}
             \label{tab:co2_logi_err}
         \end{minipage}
