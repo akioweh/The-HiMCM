@@ -21,7 +21,6 @@
 \usepackage{enumitem}
 \usepackage{siunitx}
 \usepackage{lstmisc}
-\usepackage{xcolor}
 \usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{blindtext}
@@ -30,6 +29,7 @@
 \usepackage{algorithmicx}
 \usepackage{algpseudocodex}
 \usepackage{tocloft}
+\usepackage{wrapfig}
 \usepackage{sansmathfonts}
 \usepackage[T1]{fontenc}
 \renewcommand*\familydefault{\sfdefault}
@@ -57,7 +57,16 @@
 
 
     \begin{abstract}
-        Abstract
+        Atmospheric carbon dioxide levels, in parts per million (ppm), have been increasing consistently over several decades of observation.
+        This has had considerable implications for the global climate, leading to increases in land-ocean temperatures over time.
+        The purpose of this report is to examine trends in carbon dioxide concentration and land-ocean temperatures over a period of time, and further to explore the relationship between carbon dioxide concentration and land-ocean temperatures.
+        Furthermore, these relationships are discussed and analyzed in the context of current claims and projections.
+
+        To assess the change in carbon dioxide concentration as a time series, we adopted a variety of regression models, with the intention of identifying the most accurate one. Linear regression was first used, however the residual graph shape was curved, so it was found that the next model, exponential, better fit to the data. Although this yielded an acceptable predictive model for the historical data available, it failed to account for the existence of natural limiting factors for growth. For this reason, we implemented a sigmoid regression that closely matched the exponential function up to a defined upper limit. We then employed the Facebook-developed Prophet model to further assess the reliability of this regression through comparative evaluation. This yielded a more advanced, multi-part analysis that better reflected the nuances of the CO\textsubscript{2} system; we obtained a more representative piecewise function that accounted for exponential growth, while maintaining predictions based on the most recent linear trend. Additionally, an attempted alternative prediction model was ARIMA (Auto Regressive Integrated Moving Average), which was rejected as the data set was unsuitable for the model\textquotesingle s requirements. The data\textquotesingle s unsuitability was demonstrated through ACF and PACF graphs, as well as an ADF test, which determines the stationarity of the dataset and the order of differencing required. Following correlation analysis, we determined that the Prophet, exponential and sigmoid models resulted in the most reliable future projections and corroborated each other’s predictions for existing data within reasonable bounds of error.
+
+        Furthermore, we calculated the Pearson’s Correlation Coefficient for temperature against CO2 concentration, which yielded an R\textsuperscript{2} value of approximately 0.924. This suggested a strong linear correlation that matched the distinctive positive trend of the available data. Similarly, a linear regression of temperature against time resulted in an R\textsuperscript{2} value of 0.898, indicating a reasonably accurate linear model. An analysis of error metrics revealed that although both relationships could be modelled linearly, the temperature-CO\textsubscript{2} relationship was the more strongly and verifiably linear of the two. Finally, we undertook factor analysis to examine the influences of carbon sources and sinks on future CO\textsubscript{2} levels, further comparing our predictions with existing literature values in order to evaluate the reliability of our models.
+
+
 
         \begin{keywords}
             Global Warming, Greenhouse Gases, CO\textsubscript{2}, Forecast, Predictions, Environment, Temperature
@@ -185,10 +194,10 @@
         \centering
         \begin{tabular}{ll}
             \toprule
-            Abb.                 & Full                                         \\
+            Abb.                 & Full Name                                    \\
             \midrule
             MSE                  & Mean Squared-Error                           \\
-            RMSE                 & Square root of MSE                           \\
+            RMSE                 & Square Root of MSE                           \\
             MAE                  & Mean Absolute Error                          \\
             PCC                  & Pearson's Correlation Coefficient            \\
             R\textsuperscript{2} & Coefficient of Determination, or PCC Squared \\
@@ -196,7 +205,7 @@
             \bottomrule
         \end{tabular}
         \vspace{8pt}
-        \caption{Abbreviations of Error Metrics}
+        \caption{Abbreviations of Important Metrics}
         \label{tab:err_abb}
     \end{table}
 
@@ -218,12 +227,12 @@
         \centering
         \begin{tabular}{cc}
             \toprule
-            Variable   & Definition                                                 \\
+            Variable   & Definition                                                    \\
             \midrule
-            $C_i$      & CO\textsubscript{2} level at year $i$                      \\
-            $T_i$      & Temperature at year $i$                                    \\
-            $C^{-1}_i$ & Year where (predicted) CO\textsubscript{2} is at level $i$ \\
-            $T^{-1}_i$ & Year where (predicted) Temperature is at $i$               \\
+            $C_i$      & CO\textsubscript{2} level at year $i$, in~\si{ppm}            \\
+            $T_i$      & Temperature at year $i$, in~\si{\degree C}                    \\
+            $C^{-1}_i$ & Year where (predicted) CO\textsubscript{2} is at $i$~\si{ppm} \\
+            $T^{-1}_i$ & Year where (predicted) Temperature is at $i$~\si{\degree C}   \\
             \bottomrule
         \end{tabular}
         \vspace{8pt}
@@ -319,8 +328,8 @@
     Firstly, this problem takes the form of a single-variable time series; CO\textsubscript{2} levels evolve as time passes, and we are trying to model the relationship between time and CO\textsubscript{2}.
     Based on simple logic and scientific reasoning, there is no cause-and-effect relationship between time and carbon dioxide levels, so the models will assume a relationship that is purely a statistical correlation.
 
-    The given CO\textsubscript{2} data is graphed to visualize the rough correlation and trend present in the data -~\ref{fig:co2}. It is very apparent that there is a strong correlation with minimal variance between time and carbon dioxide levels. The shape of the curve seems exponential. These ideas will be help guide future mathematical modelling.
-    Auto-correlation is calculated to identify any seasonality within the data -~\ref{fig:co2_acf}. However, it is apparent that there is no clear seasonality within the data, as shown by the lack of an oscillating correlation. This is expected since the data comes in annual resolutions; yearly seasonality could be expected due to seasonal effects, but would only be observed with monthly data.
+    The given CO\textsubscript{2} data is graphed to visualize the rough correlation and trend present in the data (Figure~\ref{fig:co2}). It is very apparent that there is a strong correlation with minimal variance between time and carbon dioxide levels. The shape of the curve seems exponential. These ideas will be help guide future mathematical modelling.
+    Auto-correlation is calculated to identify any seasonality within the data (Figure~\ref{fig:co2_acf}). However, it is apparent that there is no clear seasonality within the data, as shown by the lack of an oscillating correlation. This is expected since the data comes in annual resolutions; yearly seasonality could be expected due to seasonal effects, but would only be observed with monthly data.
 
     \begin{figure}[h]
         \centering
@@ -391,7 +400,7 @@
     OLS was applied to the given data set to obtain the coefficient $\alpha$ and the y-intercept $\beta$ - $1.6140361$ and $-2854.59326421$, respectively - which corresponds to the following linear equation:
 %
     \begin{equation}
-        C_i = 1.6140361 i - 2854.59326421
+        \hat C_i = 1.6140361 i - 2854.59326421
         \label{eq:co2_lr}
     \end{equation}
 %
@@ -400,12 +409,12 @@
     The inverse of the function is derived by solving for $i$ in terms of $C$:
 
     \begin{equation}
-        C^{-1}_i = \frac{C + 2854.59326421}{1.6140361}
+        \hat C^{-1}_i = \frac{C + 2854.59326421}{1.6140361}
         \label{eq:co2_lr_inv}
     \end{equation}
 
     $C$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2193.
-    The regression line was then graphed and used to predict the next 30 years of CO\textsubscript{2} emissions; the actual data is also plotted for comparison (Fig.~\ref{fig:co2_lr}).
+    The regression line was then graphed and used to predict the next 30 years of CO\textsubscript{2} emissions; the actual data is also plotted for comparison (Figure~\ref{fig:co2_lr}).
 
 
     Linear regression is useful in relation to the problem as it is simple to interpret and portray, allowing the prediction of data to be accurate during interpolation.
@@ -435,7 +444,7 @@
                 \bottomrule
             \end{tabular}
             \vspace{8pt}
-            \caption{Error Metrics for Linear Regression}
+            \caption{Linear Model Statistics}
             \label{tab:co2_lr_err}
         \end{minipage}
     \end{table}
@@ -476,12 +485,12 @@
     In the actual regression, 2 was used for the value of $B$.
 
     Unlike linear regression, trying to fit an exponential function to a data set would theoretically require complex methods such as partial derivatives.
-    However, a programmatic approach was taken, and the function was regressed ``blindly'' iteratively using gradient descent from derivative estimates.
-    The \verb|curve_fit()| optimizer from the SciPy library for Python can optimize any non-linear function to a data set blindly - without knowing the algebraic denotation of the function.
-    It is able to optimize unknown functions by performing gradient estimates~\eqref{eq:grad} for the values of the parameters using the basic definition of the derivative at a point $x$:
+    However, a programmatic approach was taken, and the function was ``blindly'' regressed using gradient descent (Alg.~\ref{alg:grad}) from derivative estimates.
+    The \verb|curve_fit()| optimizer from the Python SciPy library can optimize any non-linear function to a dataset blindly - without knowing the algebraic denotation of the function.
+    It is able to optimize unknown functions by performing gradient estimates~\eqref{eq:grad} of the error function with respect to the parameters using the basic definition of the derivative (at a given point, $x$):
 %
     \begin{equation}
-        G = \frac{\Delta y}{\Delta x} = \frac{f(x + \Delta x) - f(x)}{\Delta x}
+        G = \frac{\Delta f(x)}{\Delta x} = \frac{f(x + \Delta x) - f(x)}{\Delta x}
         \label{eq:grad}
     \end{equation}
 %
@@ -515,11 +524,11 @@
     The SciPy curve fit optimizer was applied to the given data to obtain the following model:
 %
     \begin{equation}
-        C_i = 2^{0.023381 (i - 1707.690634)} + 256.024002
+        \hat C_i = 2^{0.023381 (i - 1707.690634)} + 256.024002
         \label{eq:co2_exp}
     \end{equation}
 %
-    and $y$ was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm; it was found that it would reach this level at the year 2081.
+    and $i$ was solved for $\hat C_i = 685$ to find that CO\textsubscript{2} levels will reach 685\si{ppm} in 2081.
     The exponential model was graphed alongside the actual values and the linear model for comparison in Figure~\ref{fig:co2_exp}.
 
     \begin{table}[h]
@@ -544,7 +553,7 @@
                 \bottomrule
             \end{tabular}
             \vspace{8pt}
-            \caption{Error Metrics for Exponential Regression}
+            \caption{Exponential Model Statistics}
             \label{tab:co2_exp_err}
         \end{minipage}
     \end{table}
@@ -595,8 +604,22 @@
     \begin{equation}
         f(x) = \frac{x}{s^{-1}+{\left|x\right|}/{L}}
     \end{equation}
+%
+    where
+    $L$ is the curve\textquotesingle s maximum value (also the negative minimum; the function is centered at the origin) and
+    $s$ is the growth rate or slope at the midpoint.
 
-    The function\textquotesingle s parameters were then manually adjusted to best suit the current data set, giving the following equation: ${y = 2523.6 / (1 + e^{(-0.017587 * (x - 2175.5))}) + 260.0180641636529}$. {y} was then set to 685 to find the year at which CO\textsubscript{2} emissions would reach 685ppm, it was found that it would reach this level at the year 2193. The equation was then graphed alongside with the regression lines of the two previous models to obtain the following graph:
+    Because the entire idea of a sigmoid function is that there is an upper limit, this limit has to be set before the other parameters defining the curve can be regressed against the dataset.
+    If the limit left to the freedom of the optimizer, the output usually results in completely unreasonable limits, due to the fact that the optimizer will naively try to minimize the error function by adjusting any parameters necessary.
+    This is demonstrated in Figure~\ref{fig:co2_logi_2400}, where the the limit was automatically regressed to beyond 2700\si{ppm}.
+    The logistic function used was inflated so much that the sigmoid curve could only be seen on half-millennium time scales.
+
+    To avoid this issue which causes sigmoid functions to regress into practically exponential functions in a short time frame, the limit set to values between 420 and 960\si{ppm} before the optimizer was applied. The range of sigmoid curves for different limits is shown in Figure~\ref{fig:co2_sigm_all}. As explored later, external sources predict a maximum CO\textsubscript{2} level within the near future (2070) to be around 565\si{ppm}, which is used as the limit of the final sigmoid model:
+%
+    \begin{equation}
+        \hat C_i = \frac{x-2016.8}{\left(2.2796^{-1.4953}+\frac{2\left|x-2016.8\right|}{565-246.49}^{1.4953}\right)^{\frac{1}{1.4953}}}+\frac{565-246.49}{2}+246.49
+        \label{eq:co2_sig}
+    \end{equation}
 
     \begin{table}[h]
         \begin{minipage}{0.7\linewidth}
@@ -625,8 +648,6 @@
         \end{minipage}
     \end{table}
 
-    As can be seen, the logistic curve follows a very similar path to that of the exponential function. However, the 1959--2050 year range is too small to depict the sigmoid point, so the functions were graphed to reach the year 2400:
-
     \begin{figure}[h]
         \begin{minipage}{0.5\linewidth}
             \centering
@@ -642,35 +663,65 @@
         \end{minipage}
     \end{figure}
 
+    A limit at 565\si{ppm} obviously prevents the model from every reaching a 685\si{ppm} prediction. Therefore, a longer-term limit of 960\si{ppm} is used to predict the CO\textsubscript{2} level until 2100. This model predicts CO\textsubscript{2} levels to reach 685\si{ppm} in 2096. This is a reasonable limit because the predictions fall between the exponential and Prophet (explored below) models.
+
 
     \subsection{Prophet}
-    Prophet is a non-linear regression model released by Facebook, it is a procedure for forecasting time series data, working best with series that have strong seasonal effects of historical data. The graph for CO\textsubscript{2} levels over time can be plotted. The regression model is in the form:
+    Prophet is a an advanced time-series forecasting model developed by Facebook.
+    Its selling points are the ability to produce multi-part models that fit complex trends as well as seasonality.
+    Prophet is fast and generally maintains a high accuracy when predicting values.
+    It can be used in a range of different contexts and it is robust to outliers, shifts in the overall trend and missing data.
+    A Prophet model is similar to a Generalized Additive Model (reference):
+%
+    \begin{equation}
+        f(x) = g(x) + s(x) + h(x) + \epsilon
+    \end{equation}
+%
+    where
+    $g$ is the trend (made of piecewise linear or logistic functions),
+    $s$ captures seasonal patterns,
+    $h$ captures holiday (one-off) effects, and
+    $\epsilon$ is the remaining noise-like error unaccounted for by the model.
 
-    ${\displaystyle y_t = g_t + s_t + h_t +\epsilon_t}$
+    The model follows a Bayesian approach, where the prior distribution is specified; the parameters are then tuned for the model to better fit the data set. The piecewise trend consists of change-points, which are automatically selected; an upper bound can be set with a logistic function. The seasonal patterns involve Fourier series, where the default orders for annual and weekly seasonality are set to 10 and 3 respectively. Holiday effects are extra parameters designed to take into account public holidays.
 
-    Where:
-    \begin{itemize}
-        \item ${g_t}$ = Piecewise-linear trend
-        \item ${s_t}$ = Seasonal patterns
-        \item ${h_t}$ = Holiday effects
-        \item ${\epsilon_t}$ = White noise error
-    \end{itemize}
+    While Prophet is able to fit to existing data with near-perfect accuracy, its future predictions are a linear extension of the latest trend - a projection of approximately 2.4\si{ppm} increase per year. This is a reasonable prediction, but it does not reach 685\si{ppm} within the next century. Summary of the model is presented in Figure~\ref{fig:co2_prophet} and Table~\ref{tab:co2_prophet_err}.
 
-    \begin{center}
-        \frame{\includegraphics[scale=0.5]{prophet}}
-    \end{center}
+    \begin{table}[h]
+        \begin{minipage}{0.7\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{co2_prophet}%
+            \captionof{figure}{Graph of Prophet}
+            \label{fig:co2_prophet}
+        \end{minipage}%
+        \begin{minipage}{0.3\linewidth}
+            \centering
+            \begin{tabular}{ll}
+                \toprule
+                Metric               & Value   \\
+                \midrule
+                MSE                  & 0.10309 \\
+                RMSE                 & 0.32108 \\
+                MAE                  & 0.25507 \\
+                PCC                  & 0.99994 \\
+                R\textsuperscript{2} & 0.99988 \\
+                CVAR                 & 890.82  \\
+                \bottomrule
+            \end{tabular}
+            \vspace{8pt}
+            \caption{Error Metrics for Prophet}
+            \label{tab:co2_prophet_err}
+        \end{minipage}
+    \end{table}
 
-    Prophet is fast and generally maintains a high accuracy when predicting values. It can be used in a range of different contexts and it is robust to outliers, shifts in the overall trend and missing data. A key disadvantage is that a larger set of data is needed to accurately depict a trend-line.
 
     \subsection{ARIMA}
     An additional time-series prediction model that was investigated was ARIMA, which is based on ARMA (AutoRegressive Moving Average). These models are widely used in datasets that demonstrate non-stationarity, where the series\textquotesingle statistical properties such as mean, variance and autocorrelation change over time. ARMA assumes the input data to be stationary, so any non-stationary data has to be made stationary through a reversible process. Usually, the transformation involves finding the general trend with methods such as regression and then using differencing to remove the trend from the dataset. With the trend eliminated, an ARMA model can then be constructed and its optimal parameters found.
 
-    Another appropriate model to use in regards to the data set is ARIMA. ARIMA models are generally denoted as ARIMA (p, d, q) where:
-    \begin{itemize}[nosep]
-        \item p = Number of Auto-Regressive (AR) terms
-        \item d = Number of differencing
-        \item q = Number of Moving Average (MA) terms
-    \end{itemize}
+    Another appropriate model to use in regards to the data set is ARIMA, which is an extension of ARMA. ARIMA models are generally denoted as ARIMA$(p, d, q)$ where
+    $p$ is the number of Auto-Regressive (AR) terms,
+    $d$ is the orders of differencing, and
+    $q$ is the number of Moving Average (MA) terms.
 
     The functions AR(p) and MA(q) are defined below as:
     AR(p):
@@ -698,20 +749,20 @@
 
     Before tuning the parameters p and q, the number of differencing required to make the data stationary must be found out. To evaluate whether the current dataset is stationary, an Augmented Dickey-Fuller (ADF) test was performed.
 
-    ADF tests expand on the original Dickey-Fuller test by including higher-order autoregressive processes to form the equation given below:
-
-    ${\Delta y_{t}=\alpha +\beta t+\gamma y_{t-1}+\delta _{1}\Delta y_{t-1}+\cdots +\delta _{p-1}\Delta y_{t-p+1}+\varepsilon _{t}}$
-
-    Where:
-    \begin{itemize}[nosep]
-        \item ${y_{t}}$ = Value of the time series at time t
-        \item ${\alpha}$ = constant
-        \item ${\beta}$ = Coefficient on a time trend
-        \item {p} = Lag order of autoregressive process
-    \end{itemize}
+    ADF tests expand on the original Dickey-Fuller test by including higher-order autoregressive processes to form the equation:
+%
+    \begin{equation}
+        \Delta y_{t}=\alpha +\beta t+\gamma y_{t-1}+\delta _{1}\Delta y_{t-1}+\cdots +\delta _{p-1}\Delta y_{t-p+1}+\varepsilon _{t}
+    \end{equation}
+%
+    where
+    ${y_{t}}$ is the value of the time series at time t,
+    ${\alpha}$ is a constant,
+    ${\beta}$ is the coefficient of the trend, and
+    $p$ is the lag order of the autoregressive process.
 
     The results of the ADF test applied on the given dataset is presented below:
-
+%
     \begin{center}
         \begin{tabular}{ |c|c|c|c|}
             \hline
@@ -730,9 +781,12 @@
 
     To further confirm the data\textquotesingle s stationarity, autocorrelation and partial autocorrelation graphs were also used. AFC and PAFC functions are measures of correlation between past and present data, and indicate which past data values are most useful in predicting future ones. The results of these functions are then used to select the most optimal parameters for p and q. Both functions were applied on the given dataset and the graphed results displayed below:
 
-    \begin{center}
-        \frame{\includegraphics[scale=0.5]{pacf_acf}}
-    \end{center}
+    \begin{wrapfigure}{R}{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{pacf_acf}
+        \caption{ACF and PACF of CO\textsubscript{2} data}
+        \label{fig:pacf_acf}
+    \end{wrapfigure}
 
     For both graphs the x-axis represents lag, whereas the y-axis indicates the correlation strength. ACF graphs represent the correlation between data values that are n intervals apart. PACF graphs are similar in that they represent the same information, however they also account for the values of the intervals in between.
 
@@ -746,8 +800,11 @@
 
 
     \section{CO\textsubscript{2} - Model Evaluation}
-    To rank the 4 accepted predictive models on their mathematical accuracy, the following error metrics are to be calculated for each model and then compared with each other:
 
+    \subsection{Procedure}
+
+    To rank the 4 accepted predictive models on their mathematical accuracy, the following error metrics are to be calculated for each model and then compared with each other:
+%
     \begin{tabular}{|*2{p{.5\textwidth}|}}
         \hline
         \textbf{Scale-dependent Errors} & \textbf{Forecast Errors} \\
@@ -756,7 +813,7 @@
             \item MSE (Mean Squared Error)
             \item RMSE (Root Mean Squared Error)
             \item MAE (Mean Absolute Error)
-            \item PMCC (Product Moment Correlation Coefficient)
+            \item PCC (Pearson\textquotesingle s Correlation Coefficient)
             \item ${R^2}$ (Coefficient of Determination)
             \item Covariance
         \end{itemize}
@@ -768,134 +825,157 @@
         \hline
     \end{tabular}
 
-    \subsection{Procedure}
     \noindent \textbf{Separation of Known Values into Testing and Training data}
 
     75\% of known data values are allocated to the testing data group, remaining 25\% are allocated to the training group. The predictive model will take in the training group data values as its sole input, and will predict the remaining 25\%. The model\textquotesingle s predicted values are then to be compared with the training group\textquotesingle s values and the forecast errors obtained.
     A forecast error is defined as the difference between an observed and its forecasted value; the formula for a single forecast error can be modified to suit multiple data values, and it is denoted by the following equation:
-
-    ${e_{T+h} = y_{T+h} - \hat{y}_{T+h|T}}$
-
-    Where:
-    \begin{itemize}[nosep]
-        \item ${e_{T+h}}$ = Forecast error
-        \item ${y_{T+h}}$ = Actual value of the h-step observation
-        \item ${\hat{y}_{T+h|T}}$ = Actual value of the h-step forecast
-    \end{itemize}
+%
+    \begin{equation}
+        e_{T+h} = y_{T+h} - \hat{y}_{T+h|T}
+    \end{equation}
+%
+    where
+    ${e_{T+h}}$ is the forecast error,
+    ${y_{T+h}}$ is the actual value of the h-step observation, and
+    ${\hat{y}_{T+h|T}}$ is the actual value of the h-step forecast.
 
     The equation was again modified to find the sum of all the forecast errors, this was then applied to each model to construct the table below:
-
+%
     \begin{center}
         \begin{tabular}{ |c|c|c|c|c|}
             \hline
-            & \textbf{Linear} & \textbf{Exponential} & \textbf{Logistic} & \textbf{Prophet} \\
+            & \textbf{Linear} & \textbf{Exponential} & \textbf{Sigmoid} & \textbf{Prophet} \\
             \hline
-            \textbf{Absolute sum of forecast errors} & 173.66          & 190.2                & 97.07             & 40.49            \\
+            \textbf{Forecast RMSE} & 11.660          & 0.37768                & 0.41312            & 3.5618            \\
             \hline
         \end{tabular}
     \end{center}
 
-    NOTE - ADD THE 4 TESTING GRAPHS HERE
+    \begin{figure}
+        \centering
+        \begin{minipage}{0.5\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{linear_testing}
+        \end{minipage}%
+        \begin{minipage}{0.5\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{exponential_testing}
+        \end{minipage}
+    \end{figure}%
+    \begin{figure}
+        \centering
+        \begin{minipage}{0.5\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{logistic_testing}
+        \end{minipage}%
+        \begin{minipage}{0.5\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{prophet_testing}
+        \end{minipage}
+    \end{figure}
 
-    It is important to note that although a model may fit the training data well, it does not necessarily mean the model will forecast well, therefore it is important to take the other error metrics into consideration.
+
+    It is important to note that although a model may fit the testing data well, it does not necessarily mean the model will forecast well, therefore it is important to take the other error metrics into consideration.
 
 
     \subsection{Accuracy Analysis}
 
     \subsubsection*{MSE}
     Mean Squared Error (MSE) is a measure of the quality of a predictor or of an assessor, its definition differing accordingly. It is the average squared distance between the actual and predicted values, measuring the variance of the residuals. In this case, only the quality of the predictor is to be assessed. It involves taking the average squared distance between the actual and predicted values, measuring the variance of the residuals. The within-sample MSE of a predictor can then be denoted as:
-
-    ${\operatorname {MSE} ={\frac {1}{n}}\sum _{i=1}^{n}\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$
-
-    Where:
-    \begin{itemize}
-        \item ${\frac {1}{n}\sum _{i=1}^{n}}$ = Mean
-        \item ${\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$ = Squares of the errors
-    \end{itemize}
+%
+    \begin{equation}
+        \operatorname {MSE} ={\frac {1}{n}}\sum _{i=1}^{n}\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}
+        \label{eq:MSE}
+    \end{equation}
+%
+    where
+    ${\frac {1}{n}\sum _{i=1}^{n}}$ calculates the mean (across all data points) and
+    ${\left(Y_{i}-{\hat {Y_{i}}}\right)^{2}}$ is the squares of the difference between the actual and predicted values, or the error.
 
     MSE also has a differentiable graph so it makes it easier to perform mathematical operations in comparison to MAE. MSE is more sensitive to outliers compared to MAE\@.
 
     \subsubsection*{RMSE}
-    Root Mean Squared Error (RMSE) is the square root of the MSE, measuring the standard deviation of the residuals. The higher the RMSE value, the larger the deviation between actual and predicted values. By proxy, the lower the RMSE value, the lower the deviation, hence the model is more accurate. Building on the last error metric formula, RMSE can be denoted as:
-
-    ${\operatorname {RMSE} = \sqrt{MSE}}$
+    Root Mean Squared Error (RMSE) is the square root of the MSE, measuring the standard deviation of the residuals. The higher the RMSE value, the larger the deviation between actual and predicted values. By proxy, the lower the RMSE value, the lower the deviation, hence the model is more accurate. Building on the MSE~\eqref{eq:MSE} formula, RMSE can be denoted as:
+%
+    \begin{equation}
+        \operatorname {RMSE} = \sqrt{MSE}
+    \end{equation}
 
     When outliers are exponentially rare, such as this situation, RMSE is generally preferred over MSE as it provides a better evaluation of model performance, as it uses the same units as the Y axis (CO\textsubscript{2} emissions).
 
     \subsubsection*{MAE}
     Mean Absolute Error (MAE) is the sum of the absolute difference between the actual and predicted values. A perfect prediction model would yield a 0 as its MAE value. The further away from 0 the MAE value is, the more errors the model makes and hence the less accurate the model is. The formula to calculate MAE is denoted as:
+%
+    \begin{equation}
+        \displaystyle {MAE} ={\frac {\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}{n}}
+    \end{equation}
+%
+    where
+    ${\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}$ is the sum of absolute error and
+     $n$ is the Number of data points.
 
-    ${\displaystyle {MAE} ={\frac {\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}{n}}}$
-
-    Where:
-    \begin{itemize}
-        \item ${\sum _{i=1}^{n}\left|y_{i}-x_{i}\right|}$ = Sum of absolute error
-        \item {n} = Number of data points
-    \end{itemize}
-
-    \subsubsection*{PMCC, ${R^2}$ AND COVARIANCE}
+    \subsubsection*{PCC, R\textsuperscript{2}, AND COVARIANCE}
     The last 3 error metrics are explained in further detail when exploring the relationship between temperature and CO\textsubscript{2} emissions
-
-    \subsubsection*{Results}
-    The MSE, RMSE, MAE, PMCC, R\textsuperscript{2} and covariance were calculated for each accepted model, rounded to 5 s.f, and compiled into a results table below. For each error metric, the model with the value closest to and furthest from a perfect value were highlighted:
-
-    \begin{center}
-        \begin{tabular}{ |c|c|c|c|c|}
-            \hline
-            & \textbf{Linear} & \textbf{Exponential} & \textbf{Logistic} & \textbf{Prophet} \\
-            \hline
-            \textbf{MSE}        & 15.376          & 0.47977              & 0.47977           & 0.10310          \\ \hline
-            \textbf{RMSE}       & 3.9212          & 0.69266              & 0.69266           & 0.32109          \\ \hline
-            \textbf{MAE}        & 3.1920          & 0.56081              & 0.57286           & 0.25507          \\ \hline
-            \textbf{PMCC}       & 0.99119         & 0.99973              & 0.99973           & 0.99994          \\ \hline
-            \textbf{${R^2}$}    & 0.98246         & 0.99945              & 0.99945           & 0.99990          \\ \hline
-            \textbf{Covariance} & 875.32          & 890.45               & 890.45            & 890.82           \\ \hline
-        \end{tabular}
-    \end{center}
-
-    For each model, the year at which 685ppm was reached and the range from 2050 was found to construct the following table:
-
-    \begin{center}
-        \begin{tabular}{ |c|c|c|c|c|}
-            \hline
-            \textbf{Year (at which 685ppm is reached)} & 2193 & 2097 & 2085 & 2134 \\
-            \hline
-            \textbf{Range (from 2050)}                 & 143  & 29   & 35   & 84   \\
-            \hline
-        \end{tabular}
-    \end{center}
-
-    The graphed training results demonstrate that the Prophet model has the least amount of forecasting errors, and all the error metrics were closest to those of a perfect prediction. However, the error metrics may not give a perfectly clear indication as to which of the models is most accurate, as the difference between prophet and the exponential and logistic error metrics is negligible. Additionally, the year at which 685ppm was reached by the exponential model was closest to the predicted year by OECD.
-
-    Overall, even if by a small margin, as the Prophet model better fulfills the above criteria, it is deemed to be the most accurate out of the accepted models chosen and tested. This decision is reinforced by the model’s use in major companies; additional studies have also demonstrated Prophet’s high accuracy in predictions. A major disadvantage to the model however is its speed, as the run time to process a single item is ~60ms. In this situation, this disadvantage can be overlooked, as the data set was small enough so as not to cause time issues.
-
-
-    \subsection{Sensitivity Analysis}
-    blah blah
-
-
-    \subsection{Overall Evaluation}
-
-    \noindent\textbf{Strength 1}: asdf
-
-    \noindent\textbf{Strength 2}: asdf
-
-    \noindent\textbf{Weakness 1}: asdf
-
-
-    \subsection{Possible Improvements}
-    blah blah
 
 
 
     \section{CO\textsubscript{2} - Results \& Conclusions}
 
     \subsection{Forecast Results}
-    we\textquotesingle re doomed
+
+    Figure~\ref{fig:co2_all} summarizes all above models in one graph.
+    The horizontal line marks 685\si{ppm}.
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=\linewidth]{co2_pred_all}
+        \caption{Graph of all Models}
+        \label{fig:co2_all}
+    \end{figure}
+
+
+    The MSE, RMSE, MAE, PCC, R\textsuperscript{2} and covariance were calculated for each accepted model, rounded to 5 s.f., and compiled into a results table below. For each error metric, the model with the value closest to and furthest from a perfect value were highlighted:
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|c|}
+            \hline
+            & \textbf{Linear} & \textbf{Exponential} & \textbf{Sigmoid} & \textbf{Prophet} \\
+            \hline
+            \textbf{MSE}        & 15.376          & 0.47977              & 0.61002          & 0.10310          \\ \hline
+            \textbf{RMSE}       & 3.9212          & 0.69266              & 0.78104          & 0.32109          \\ \hline
+            \textbf{MAE}        & 3.1920          & 0.56081              & 0.66350          & 0.25507          \\ \hline
+            \textbf{PCC}        & 0.99119         & 0.99973              & 0.99965          & 0.99994          \\ \hline
+            \textbf{R\textsuperscript{2}}    & 0.98246         & 0.99945              & 0.99930          & 0.99990          \\ \hline
+            \textbf{Covariance} & 875.32          & 890.45               & 889.87           & 890.82           \\ \hline
+        \end{tabular}
+    \end{center}
+
+    For each model, the year at which 685ppm was reached and the range from 2050 was found to construct the following table:
+
+    \begin{table}
+        \centering
+        \begin{tabular}{ |c|c|c|c|c|}
+            \hline
+            & \textbf{Linear} & \textbf{Exponential} & \textbf{Sigmoid} & \textbf{Prophet} \\
+            \hline
+            \textbf{Year (at which 685ppm is reached)} & 2193            & 2081                 & 2096             & 2134             \\
+            \hline
+            \textbf{Range (from 2050)}                 & +143            & +31                  & +46              & +84              \\
+            \hline
+        \end{tabular}
+        \caption{Different Models\textquotesingle~Predictions to reach 685ppm}
+        \label{tab:co2_685}
+    \end{table}
+
+    The train-test data split procedure demonstrated that the exponential model has the least amount of forecasting errors.
+    However, Prophet has the best error metrics, such as the lowest MSE and highest R\textsuperscript{2}. However, this improvement is small over the exponential model and is explained by Prophet's ability to fit to arbitrary trends where it was able to capture irregularities in the data; essentially over-fitting.
+
+    Overall, even if by a small margin, as the Prophet model better fulfills the above criteria, it is deemed to be the most accurate out of the accepted models chosen and tested. This decision is reinforced by the model’s use in major companies; additional studies have also demonstrated Prophet’s high accuracy in predictions. A major disadvantage to the model however is its speed, as the run time to process a single item is ~60ms. In this situation, this disadvantage can be overlooked, as the data set was small enough so as not to cause time issues.
 
 
     \subsection{Comparison with External Claims}
-    they\textquotesingle re all wrong
+
+    With all relevant models fully constructed, a conclusion can be provided in response to claims by external sources.
 
 
     \subsubsection*{NOAA: 2004 observed largest increase yet}
@@ -921,6 +1001,13 @@
     $C_i$ is the CO\textsubscript{2} level in the initial year of the decade.
 
     This computation was carried out using a moving ten-year interval window, yielding a comparable measure of change for every preceding decade.
+
+    \begin{wrapfigure}{R}{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{1a_10y_chg_rel}
+        \caption{Moving Decadal Change}
+        \label{fig:1a_1}
+    \end{wrapfigure}
 
     As indicated in Figure~\ref{fig:1a_1}, the net percentage increase in atmospheric CO\textsubscript{2} levels over the ten-year period 1994--2004 (4.63\%), while significant, was lower than that of the period1993--20033 (4.74\%). With regard to the available data, the March 2004 increase was therefore only the second-highest recorded over any previous 10-year period.
 
@@ -962,33 +1049,154 @@
     In summary, both approaches yielded an identical conclusion; while the March 2004 increase of CO\textsubscript{2} was among the largest observed until that date, it was not the single largest. In terms of net change and increase from the decadal mean, it was exceeded by the change as of March 2003. Furthermore, its final increase relative to the average annual increase within the ten-year period was significantly smaller than several preceding decade intervals.
 
 
-
-
     \subsubsection*{OECD: reaching 685ppm by 2050}
+
+   Quoted from the problem statement: ``An Organisation for Economic Co-Operations and Development (OECD) report predicts a CO\textsubscript{2} level of 685ppm by 2050.''.
+
+    Unlike the claim above, this one is straightforward to verify. According to data presented in Table~\ref{tab:co2_685}, no models constructed were close to the year proposed by this claim; even the fastest-growing model, the exponential model, predicted a minimum of 2081 to reach 685ppm.
+    All other models provide even further estimates.
+
+    There is a simple explanation for this discrepancy. The OECD never claimed a 686ppm level of \textit{carbon dioxide} by 2050, but rather of \textit{all greenhouse gases}. Naturally, this figure will be higher than CO\textsubscript{2} alone, because CO\textsubscript{2} only accounts for 76\% of all greenhouse gases.
 
 
     \section{Temperature - Modelling}
 
-    \subsection{Time Series}
-    Temperature over time.
+    The model chosen to both forecast future temperature changes and to investigate whether a relationship exists between CO2 emissions and temperatures is a linear regression model. Although it was previously evaluated that Prophet and exponential regression were the most accurate models in forecasting future CO2 emissions, it will not be used for this section. The reason for the exponential model’s success is mainly attributed to the data set’s visibly curved trend, suggesting an exponential or power trend. An exponential relationship was confirmed after practical modelling.
 
+    On the other hand, temperature visually follows a more steadily linear trend; curves and deviations are not as apparent, hence the model was chosen to further investigate and confirm the trend. Additionally, to support this decision, linear regression is a popular and common approach used to model the relationship between an independent and a dependent variable (this case being CO2 emissions and temperature respectively), and hence would be the most optimal model to use for temperature/CO2 analysis.
 
-    \subsection{Relationship with CO\textsubscript{2}}
-    100\% causation
+    To begin, the values for each variable are plotted onto a graph, and a regression line drawn which can be analysed, allowing other values to be predicted based on existing values. For simple regression, the form of model (trend line) can be defined as.
+
+    \begin{wrapfigure}{r}{0.6\textwidth}
+        \centering
+        \includegraphics[width=0.6\textwidth]{ct2}
+        \label{fig:ct}
+    \end{wrapfigure}
+
+    The regression line (Figure~\ref{fig:ct}) demonstrates the relationship between the two variables, where PCC is used to measure the correlation strength. The coefficient of determination was determined by squaring the PCC value. R\textsuperscript{2} measures the proportion of variation in the temperatures and CO\textsubscript{2} levels. Covariance was also calculated, and this measures the directional relationship between the x and y variable. The definitions and results for PCC and covariance are denoted in Table~\ref{tab:mm}.
+
+    The PCC and covariance values obtained indicate a very strong positive correlation between CO\textsubscript{2} emissions and temperature. As for the R\textsuperscript{2} value, it indicates that 92\% of the variability observed in temperature can be explained by CO\textsubscript{2} emissions. Hence, the conclusion can be formed that there exists a strong positive relationship between CO\textsubscript{2} emissions and temperature.
+
+    As the existence of the relationship has been confirmed and justified, the regression line can be used to extrapolate future data. A temperature over time model was constructed and extended 30 years in the future to forecast future temperatures. The highlighted region indicates the margin of error and the black points indicate the actual observed values:
+
+    As can be observed, the regression line’s margin of error extends to cover the vast majority of known value points. Additionally, what can be remarked is that the Prophet model was applied to the data to produce a completely identical trend-line to that of linear regression. It was previously argued in the introduction that Prophet and exponential modelling would not be used as visually, linear regression indicated the best fit. However, this argument applied mainly to the CO2 and temperature relationship. Prophet is capable of producing a more nuanced model that accounts for varying parameters; hence, the fact that its application yields an identical result to that of linear regression supports the initial argument that the best model option is linear regression.
+
+    As linear regression’s accurate predictive ability has been confirmed, the equation line can then be used to obtain the years at which a temperature change of 1.25C, 1.5C and 2C will occur, compared to the base period. External predicted year values were obtained from carbonbrief.org as comparison. The results are presented in the table below:
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|}
+            \hline
+            & \textbf{1.25C} & \textbf{1.5C} & \textbf{2C}         \\
+            \hline
+            \textbf{Linear Regression} & 2043           & 2058          & 2088                \\
+            \hline
+            \textbf{External}          & N/A            & 2026--2042    & 22043--2052 \\ \hline
+        \end{tabular}
+    \end{center}
+
+    The year values obtained are generally higher in comparison to the external values, which is possibly due to the spike in temperature from 2018--2021. The spike may have caused the gradient of the regression line to increase to accommodate for the sudden temperature increases, which in turn led to higher values.
 
 
 
     \section{Temperature - Model Evaluation}
 
+    \subsection{Error Metrics (cont.)}
+
+    \begin{table}
+        \begin{tabular}{|*2{p{.5\textwidth}|}}
+            \hline & \\
+            \quad ${\displaystyle r={\frac {\sum (x_{i}-{\bar {x}})(y_{i}-{\bar {y}})}{{\sqrt {\sum (x_{i}-{\bar {x}})^{2}}}{\sqrt {\sum (y_{i}-{\bar {y}})^{2}}}}}}$ & ${\displaystyle cov_{x,y}={\frac {\sum (x_{i}-{\bar {x}})(y_{i}-{\bar {y}})}{{N-1}}}}$\\[\baselineskip]
+            Where
+            \begin{itemize}[nosep]
+                \item {r} = Correlation coefficient
+                \item ${x_i}$ = Values of the x-variable in a sample
+                \item ${\overline x}$ = Mean of the values of the x-variable
+                \item ${y_i}$ - Values of the y-variable in a sample
+                \item ${\overline y}$ = Mean of the values of the y-variable
+            \end{itemize}
+            &
+            Where
+            \begin{itemize}[nosep]
+                \item ${cov_{x,y}}$ = Covariance between variable x and y
+                \item ${x_i}$ = Data value of x
+                \item ${y_i}$ = Data value of y
+                \item ${\bar{x}}$ = Mean of x
+                \item ${\bar{y}}$ = Mean of y
+                \item {N} = Number of data values
+            \end{itemize}
+            \\
+            \hline
+        \end{tabular}
+        \caption{More Metrics}
+        \label{tab:mm}
+    \end{table}
+
     \subsection{Predictive Ability}
-    our model definitely retains its accuracy 1000 years into the future.
+
+    The linear model relating CO2 level to temperature is accurate and reliable when performing interpolation, since it fits existing data points with a very high coefficient of determination of 0.924. However, in order to predict future temperatures based on future CO2 levels, extrapolation must be performed on the CO2 model. By nature, extrapolation is less accurate than interpolation. This implies a lower forecast reliability of the model, as the assumption is made that the relationships remain unchanged.
+
+    Regardless, current data exhibits a very strong linear relationship between CO2 and temperature, as shown by a PCC of 0.961. Prophet, which is able to fit to complex trends and perform highly accurate interpolation, simply produced a perfectly linear model. This supports the conclusion that the best model is a linear relationship, and that the relationship shows no sign of changing in the future.
+
+    The three linear regression models - CO2-time, CO2-temperature, and temperature-time - are linked together by the fact that the relationship between CO2 and temperature exhibits a  strong statistical correlation. It is scientifically proven that CO2 and temperature have a cause-and-effect relationship, due to the greenhouse effect, where CO2 has a warming effect. This provides a link between the three models, where all three variables correlate strongly. This multi-variable correlation supports the accuracy of each individual model. On the contrary, if there is an unforeseen change in one of the relationships, all models will be incorrect.
+
+    Another approach to verify the accuracy and reliability of the models was to compare the predictions with external sources (existing literature). This can help us analyse the reliability of the forecast.
+
+    Values of CO2 concentration and Temperature Rise from secondary sources projected for 2100
+
+    \begin{center}
+        \begin{tabular}{ |c|c|}
+            \hline
+            \textbf{CO\textsubscript{2} (ppm)} & \textbf{Temperature Rise (C)} \\
+            \hline
+            701 & 2.2 \\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c|}
+            \hline
+            Data from: & \textbf{CO\textsubscript{2} (ppm)} & \textbf{Temperature Rise (C)} \\
+            \hline
+            Confirmed Proposals (2011) & 900 & 4.0 \\
+            \hline
+            INDCs Strict (2015) & 670 & 3.5 \\ \hline
+            2C Pathway (2015) & 475 & 2.0 \\ \hline
+            1.8C Pathway (2015) & 450 & 1.8 \\ \hline
+            1.5C Pathway (2015) & 425 & 1.5 \\ \hline
+            2014 `Actuals' & 397 & 0.9 \\ \hline
+            \textbf{Mean} & 536.16567 & 2.283333 \\ \hline
+            \textbf{Standard Deviation} & 161.49974 & 1.206681 \\ \hline
+        \end{tabular}
+    \end{center}
+
 
 
 
     \section{Temperature - Results \& Conclusions}
 
     \subsection{Forecast Results}
-    time to get baked.
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c|}
+            \hline
+            \textbf{PCC} & \textbf{R\textsuperscript{2}} & \textbf{Covariance}\\
+            \hline
+            0.9599812208926523 & 0.9215639444665472 & 9.20384156682028\\
+            \hline
+        \end{tabular}
+    \end{center}
+
+    \begin{center}
+        \begin{tabular}{ |c|c|c|c|}
+            \hline
+            & \textbf{1.25C} &  \textbf{1.5C} & \textbf{2C} \\
+            \hline
+            \textbf{Linear Regression} & 2043 & 2058 & 2088 \\
+            \hline
+            \textbf{External} & N/A & 2026--2042 & 22043--2052 \\ \hline
+        \end{tabular}
+    \end{center}
 
 
 
