@@ -1026,8 +1026,15 @@
     where
     $C_f$ is CO\textsubscript{2} level in the decade end year
     $\mu$ is ten-year arithmetic average CO\textsubscript{2} level.
-    The indicator thus provides a convenient and comparable measure for the increase in CO\textsubscript{2} levels at the end of each decade, relative to the ten-year average. A comparison of the-values calculated over the available data yielded the following result, represented visually in Figure 1.2, below.
 
+    The indicator thus provides a convenient and comparable measure for the increase in CO\textsubscript{2} levels at the end of each decade, relative to the ten-year average. A comparison of the-values calculated over the available data yielded the following result, represented visually in Figure~\ref{fig:asdf}, below.
+%
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\linewidth]{1a_10y_mv_avg_rel}
+        \caption{Moving Decadal Average}
+        \label{fig:asdf}
+    \end{figure}
 
     Relative to previous years, the value of $\alpha$ for the decade ending in 2004 (1.0233) was the second-highest calculated, exceeded by that of 2003 (1.0238). This implies that the intra-decade increase for March 2004, in comparison to previous decades, was not the highest.
 
@@ -1041,6 +1048,14 @@
     $\mu_i$ is the arithmetic average yearly increase over the ten-year period.
 
     This yielded a corroborating result, with the $\beta$-value for the decade ending in 2004 (1.217) lower than that of 14 other preceding decade groups.
+%
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.8\linewidth]{1a_10y_mv_avg_chg_rel}
+        \caption{Moving Decadal Average Change}
+        \label{fig:asdfasdf}
+    \end{figure}
+%
 
     Therefore, the intra-decade change for 1994--2004 is significantly smaller than that of multiple preceding decades.
 
@@ -1065,44 +1080,24 @@
 
     On the other hand, temperature visually follows a more steadily linear trend; curves and deviations are not as apparent, hence the model was chosen to further investigate and confirm the trend. Additionally, to support this decision, linear regression is a popular and common approach used to model the relationship between an independent and a dependent variable (this case being CO2 emissions and temperature respectively), and hence would be the most optimal model to use for temperature/CO2 analysis.
 
-    To begin, the values for each variable are plotted onto a graph, and a regression line drawn which can be analysed, allowing other values to be predicted based on existing values. For simple regression, the form of model (trend line) can be defined as.
-
     \begin{wrapfigure}{r}{0.6\textwidth}
         \centering
         \includegraphics[width=0.6\textwidth]{ct2}
+        \caption{Temperature over CO\textsuperscript{2}}
         \label{fig:ct}
     \end{wrapfigure}
 
-    The regression line (Figure~\ref{fig:ct}) demonstrates the relationship between the two variables, where PCC is used to measure the correlation strength. The coefficient of determination was determined by squaring the PCC value. R\textsuperscript{2} measures the proportion of variation in the temperatures and CO\textsubscript{2} levels. Covariance was also calculated, and this measures the directional relationship between the x and y variable. The definitions and results for PCC and covariance are denoted in Table~\ref{tab:mm}.
+    To begin, the values for each variable are plotted onto a graph, and a regression line drawn which can be analysed, allowing other values to be predicted based on existing values. For simple regression, the form of model (trend line) can be defined as.
 
-    The PCC and covariance values obtained indicate a very strong positive correlation between CO\textsubscript{2} emissions and temperature. As for the R\textsuperscript{2} value, it indicates that 92\% of the variability observed in temperature can be explained by CO\textsubscript{2} emissions. Hence, the conclusion can be formed that there exists a strong positive relationship between CO\textsubscript{2} emissions and temperature.
-
-    As the existence of the relationship has been confirmed and justified, the regression line can be used to extrapolate future data. A temperature over time model was constructed and extended 30 years in the future to forecast future temperatures. The highlighted region indicates the margin of error and the black points indicate the actual observed values:
-
-    As can be observed, the regression line’s margin of error extends to cover the vast majority of known value points. Additionally, what can be remarked is that the Prophet model was applied to the data to produce a completely identical trend-line to that of linear regression. It was previously argued in the introduction that Prophet and exponential modelling would not be used as visually, linear regression indicated the best fit. However, this argument applied mainly to the CO2 and temperature relationship. Prophet is capable of producing a more nuanced model that accounts for varying parameters; hence, the fact that its application yields an identical result to that of linear regression supports the initial argument that the best model option is linear regression.
-
-    As linear regression’s accurate predictive ability has been confirmed, the equation line can then be used to obtain the years at which a temperature change of 1.25C, 1.5C and 2C will occur, compared to the base period. External predicted year values were obtained from carbonbrief.org as comparison. The results are presented in the table below:
-
-    \begin{center}
-        \begin{tabular}{ |c|c|c|c|}
-            \hline
-            & \textbf{1.25C} & \textbf{1.5C} & \textbf{2C}         \\
-            \hline
-            \textbf{Linear Regression} & 2043           & 2058          & 2088                \\
-            \hline
-            \textbf{External}          & N/A            & 2026--2042    & 22043--2052 \\ \hline
-        \end{tabular}
-    \end{center}
-
-    The year values obtained are generally higher in comparison to the external values, which is possibly due to the spike in temperature from 2018--2021. The spike may have caused the gradient of the regression line to increase to accommodate for the sudden temperature increases, which in turn led to higher values.
+    The regression line (Figure~\ref{fig:ct}) shows the relationship between the two variables, where PCC is used to measure the correlation strength. The coefficient of determination was determined by squaring the PCC value. R\textsuperscript{2} measures the proportion of variation in the temperatures and CO\textsubscript{2} levels. Covariance was also calculated, and this measures the directional relationship between the x and y variable. The definitions and results for PCC and covariance are denoted in Table~\ref{tab:mm}.
 
 
 
-    \section{Temperature - Model Evaluation}
+    \section{Temperature - Evaluation}
 
-    \subsection{Error Metrics (cont.)}
+    \subsection{Accuracy \& Correlation}
 
-    \begin{table}
+    \begin{table}[h]
         \begin{tabular}{|*2{p{.5\textwidth}|}}
             \hline & \\
             \quad ${\displaystyle r={\frac {\sum (x_{i}-{\bar {x}})(y_{i}-{\bar {y}})}{{\sqrt {\sum (x_{i}-{\bar {x}})^{2}}}{\sqrt {\sum (y_{i}-{\bar {y}})^{2}}}}}}$ & ${\displaystyle cov_{x,y}={\frac {\sum (x_{i}-{\bar {x}})(y_{i}-{\bar {y}})}{{N-1}}}}$\\[\baselineskip]
@@ -1129,9 +1124,43 @@
         \end{tabular}
         \caption{More Metrics}
         \label{tab:mm}
+    \end{table}%
+    \begin{table}[H]
+        \centering
+        \begin{tabular}{ |c|c|c|}
+            \hline
+            \textbf{PCC} & \textbf{R\textsuperscript{2}} & \textbf{Covariance}\\
+            \hline
+            0.9599812208926523 & 0.9215639444665472 & 9.20384156682028\\
+            \hline
+        \end{tabular}
     \end{table}
 
+    The PCC and covariance values obtained indicate a very strong positive correlation between CO\textsubscript{2} emissions and temperature. As for the R\textsuperscript{2} value, it indicates that 92\% of the variability observed in temperature can be explained by CO\textsubscript{2} emissions. Hence, the conclusion can be formed that there exists a strong positive relationship between CO\textsubscript{2} emissions and temperature.
+
+    As the existence of the relationship has been confirmed and justified, the regression line can be used to extrapolate future data. A temperature over time model was constructed and extended 30 years in the future to forecast future temperatures. The results are plotted in Figure~\ref{fig:temp_pred}; the highlighted region indicates the margin of error and the black points indicate the actual observed values.
+
+    \begin{figure}[h]
+        \centering
+        \begin{minipage}{0.45\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{temp_pred}
+        \end{minipage}%
+        \begin{minipage}{0.55\linewidth}
+            \centering
+            \includegraphics[width=\textwidth]{temp_prophet}
+        \end{minipage}
+        \caption{Linear Temperature Predictions}
+        \label{fig:temp_pred}
+    \end{figure}
+
+
+    As can be observed, the regression line’s margin of error extends to cover the vast majority of known value points. Additionally, what can be remarked is that the Prophet model was applied to the data to produce a completely identical trend-line to that of linear regression. It was previously argued in the introduction that Prophet and exponential modelling would not be used as visually, linear regression indicated the best fit. However, this argument applied mainly to the CO2 and temperature relationship. Prophet is capable of producing a more nuanced model that accounts for varying parameters; hence, the fact that its application yields an identical result to that of linear regression supports the initial argument that the best model option is linear regression.
+
+
     \subsection{Predictive Ability}
+
+    \noindent\textbf{Temperature over CO\textsubscript{2} Model}
 
     The linear model relating CO2 level to temperature is accurate and reliable when performing interpolation, since it fits existing data points with a very high coefficient of determination of 0.924. However, in order to predict future temperatures based on future CO2 levels, extrapolation must be performed on the CO2 model. By nature, extrapolation is less accurate than interpolation. This implies a lower forecast reliability of the model, as the assumption is made that the relationships remain unchanged.
 
@@ -1171,52 +1200,28 @@
     \end{center}
 
 
+    \noindent\textbf{Temperature over Time Model}
 
+    As linear regression’s accurate predictive ability has been confirmed, the equation line can then be used to obtain the years at which a temperature change of 1.25C, 1.5C and 2C will occur, compared to the base period. External predicted year values were obtained from carbonbrief.org as comparison. The results are presented in the table below:
 
-    \section{Temperature - Results \& Conclusions}
-
-    \subsection{Forecast Results}
-
-    \begin{center}
-        \begin{tabular}{ |c|c|c|}
-            \hline
-            \textbf{PCC} & \textbf{R\textsuperscript{2}} & \textbf{Covariance}\\
-            \hline
-            0.9599812208926523 & 0.9215639444665472 & 9.20384156682028\\
-            \hline
-        \end{tabular}
-    \end{center}
-
-    \begin{center}
+    \begin{table}[h]
+        \centering
         \begin{tabular}{ |c|c|c|c|}
             \hline
-            & \textbf{1.25C} &  \textbf{1.5C} & \textbf{2C} \\
+            & \textbf{1.25C} & \textbf{1.5C} & \textbf{2C}         \\
             \hline
-            \textbf{Linear Regression} & 2043 & 2058 & 2088 \\
+            \textbf{Linear Regression} & 2043           & 2058          & 2088                \\
             \hline
-            \textbf{External} & N/A & 2026--2042 & 22043--2052 \\ \hline
+            \textbf{External}          & N/A            & 2026--2042    & 2043--2052 \\ \hline
         \end{tabular}
-    \end{center}
+    \end{table}
+
+    The year values obtained are generally higher in comparison to the external values, which is possibly due to the spike in temperature from 2018--2021. The spike may have caused the gradient of the regression line to increase to accommodate for the sudden temperature increases, which in turn led to higher values.
 
 
 
     \section{References}
 
-    \subsection{Program Code}
-    \noindent Result data generated:
-    \begin{verbatim}
-    text data stuff
-
-    \end{verbatim}
-
-    \noindent Python program code:
-    \begin{lstlisting}[language=Python]
-        # pass
-
-    \end{lstlisting}
-
-
-    \subsection{Bibliography}
 %    \printbibliography
 
 \end{document}
