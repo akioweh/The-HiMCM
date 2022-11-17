@@ -1,7 +1,9 @@
 # The-HiMCM
 this time for real.  
 
-P.S. we're done. 
+P.S. we're done.  
+
+The PDF of the final paper is in [`/paper/out/main.pdf`](https://github.com/akioweh/The-HiMCM/blob/main/paper/out/main.pdf)
 
 ![1](png_render/12833_Page_01.png?raw=True)  
 ![1](png_render/12833_Page_02.png?raw=True)  
