@@ -2,8 +2,9 @@
 *this time for real.*  
 
 P.S. we're done.  
+P.P.S. we got Meritorious (results page [here](https://www.contest.comap.com/highschool/contests/himcm/2022_HiMCM_Results.pdf))  
 
-
+---
 **LaTeX source** of the paper is found in [`/paper/src/`](/paper/src/)  
 Rendered **figures & graphs** are found in [`/paper/src/figs/`](/paper/src/figs/)  
 Most of the data analysis is done with Python; **Jupyter Notebook** in [`/py/main.ipynb`](/py/main.ipynb)  
