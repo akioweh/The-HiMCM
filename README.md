@@ -1,9 +1,15 @@
 # The-HiMCM
-this time for real.  
+*this time for real.*  
 
 P.S. we're done.  
 
-The PDF of the final paper is in [`/paper/out/main.pdf`](https://github.com/akioweh/The-HiMCM/blob/main/paper/out/main.pdf)
+
+**LaTeX source** of the paper is found in [`/paper/src/`](/paper/src/)  
+Rendered **figures & graphs** are found in [`/paper/src/figs/`](/paper/src/figs/)  
+Most of the data analysis is done with Python; **Jupyter Notebook** in [`/py/main.ipynb`](/py/main.ipynb)  
+The **PDF** of the final paper is in [`/paper/out/main.pdf`](/paper/out/main.pdf)
+
+## Preview
 
 ![1](png_render/12833_Page_01.png?raw=True)  
 ![1](png_render/12833_Page_02.png?raw=True)  
